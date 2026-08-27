@@ -71,7 +71,13 @@ const seo = {
           </h1>
           
           <div class="font-mono text-sm text-muted-star tracking-widest uppercase animate-project-fade-up" style="animation-delay: 220ms">
-            {entry.data.domain}
+            <span>{entry.data.domain}</span>
+            {entry.data.date && (
+              <>
+                <span class="mx-3 opacity-50">·</span>
+                <span class="opacity-70">{new Date(entry.data.date).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+              </>
+            )}
           </div>
         </header>
 

@@ -189,7 +189,12 @@ export default function ConstellationMap({ projects }: MapProps) {
                         <span>{star.name}</span>
                       </div>
                       <h3 className="font-display font-bold text-starlight uppercase mb-1 text-sm md:text-base">{star.project.data.title}</h3>
-                      <p className="font-mono text-[10px] text-solar-gold mb-3 capitalize">{star.project.data.domain}</p>
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="font-mono text-[10px] text-solar-gold capitalize">{star.project.data.domain}</span>
+                        {star.project.data.date && (
+                          <span className="font-mono text-[9px] text-muted-star/50">{new Date(star.project.data.date).getFullYear()}</span>
+                        )}
+                      </div>
                       <div className="font-mono text-[9px] text-muted-star border border-muted-star/30 inline-block px-2 py-1 tracking-widest">
                         VIEW PROJECT →
                       </div>

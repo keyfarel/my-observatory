@@ -14,7 +14,10 @@ const projects = projectsData.map(p => ({
   slug: p.id,
   data: {
     title: p.data.title,
-    domain: p.data.domain
+    domain: p.data.domain,
+    description: p.data.description,
+    tech: p.data.tech,
+    date: p.data.date
   }
 }));
 
@@ -203,9 +206,15 @@ const seo = {
             
             <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               <div class="md:col-span-8">
-                <div class="font-mono text-solar-gold text-xs tracking-widest mb-4 flex items-center gap-3">
+                <div class="font-mono text-solar-gold text-xs tracking-widest mb-4 flex items-center gap-3 uppercase">
                   <span class="w-1.5 h-1.5 rounded-full bg-solar-gold animate-pulse"></span>
                   FEATURED SYSTEM
+                  {projects[0].data.date && (
+                    <>
+                      <span class="text-muted-star">·</span>
+                      <span class="text-muted-star/70">{new Date(projects[0].data.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                    </>
+                  )}
                 </div>
                 
                 <h3 class="font-display text-3xl md:text-5xl text-starlight mb-6 uppercase tracking-tight">
@@ -213,13 +222,18 @@ const seo = {
                 </h3>
                 
                 <p class="font-mono text-sm text-muted-star mb-8 max-w-xl leading-relaxed">
-                  {projects[0].data.description || 'A complex system built at the intersection of software and the physical world, focusing on data acquisition and hardware integration.'}
+                  {projects[0].data.description}
                 </p>
                 
                 <div class="flex flex-wrap gap-3 font-mono text-xs text-muted-star/70 uppercase">
-                  <span class="px-3 py-1 border border-muted-star/20 rounded-sm">IoT</span>
-                  <span class="px-3 py-1 border border-muted-star/20 rounded-sm">Data Pipeline</span>
-                  <span class="px-3 py-1 border border-muted-star/20 rounded-sm">Hardware</span>
+                  {projects[0].data.tech ? projects[0].data.tech.split('·').slice(0, 3).map((t) => (
+                    <span class="px-3 py-1 border border-muted-star/20 rounded-sm">{t.trim()}</span>
+                  )) : (
+                    <>
+                      <span class="px-3 py-1 border border-muted-star/20 rounded-sm">IoT</span>
+                      <span class="px-3 py-1 border border-muted-star/20 rounded-sm">Data Pipeline</span>
+                    </>
+                  )}
                 </div>
               </div>
               
