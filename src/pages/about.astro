@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/ui/Navbar.astro';
+
+const seo = {
+  title: 'About Key Firdausi Al Farel — Software Engineer',
+  description: 'Learn more about Key Firdausi Al Farel, a Software Engineer focusing on IoT, Data, and System Architecture.'
+};
+---
+
+<Layout seo={seo}>
+  <div class="min-h-screen flex flex-col">
+    <Navbar />
+    
+    <main class="flex-grow max-w-3xl mx-auto w-full px-6 py-12 md:py-24">
+      <header class="mb-20">
+        <h1 class="font-display font-light text-5xl text-starlight mb-4 uppercase">THE OBSERVER</h1>
+      </header>
+      
+      <div class="prose prose-invert prose-p:font-sans prose-p:text-starlight prose-p:text-lg prose-p:leading-relaxed max-w-none mb-20">
+        <p>
+          I'm Key, a software engineer interested in building systems that connect software with the physical world.
+        </p>
+        <p class="text-muted-star">
+          My interests sit somewhere between:
+        </p>
+        <ul class="list-none pl-0 font-mono text-solar-gold space-y-2 mt-8 text-sm tracking-wider">
+          <li>SOFTWARE</li>
+          <li>IoT</li>
+          <li>DATA</li>
+          <li>SYSTEMS</li>
+          <li>HARDWARE</li>
+        </ul>
+      </div>
+
+      <div class="space-y-12 relative before:absolute before:inset-0 before:ml-[5px] before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-muted-star/20 before:to-transparent">
+        
+        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+          <div class="flex items-center justify-center w-3 h-3 rounded-full border border-solar-gold bg-deep-space shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_10px_rgba(244,184,96,0.5)]"></div>
+          <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] font-mono text-sm">
+            <div class="text-solar-gold mb-1">NEXT</div>
+            <div class="text-starlight">...</div>
+          </div>
+        </div>
+
+        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+          <div class="flex items-center justify-center w-3 h-3 rounded-full bg-muted-star/50 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2"></div>
+          <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] font-mono text-sm text-right md:group-even:text-left">
+            <div class="text-muted-star mb-1">2026</div>
+            <div class="text-starlight">IoT / Digital Systems / Hardware</div>
+          </div>
+        </div>
+
+        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+          <div class="flex items-center justify-center w-3 h-3 rounded-full bg-muted-star/50 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2"></div>
+          <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] font-mono text-sm">
+            <div class="text-muted-star mb-1">2025</div>
+            <div class="text-starlight">Backend / Full-stack</div>
+          </div>
+        </div>
+
+        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+          <div class="flex items-center justify-center w-3 h-3 rounded-full bg-muted-star/50 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2"></div>
+          <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] font-mono text-sm text-right md:group-even:text-left">
+            <div class="text-muted-star mb-1">2024</div>
+            <div class="text-starlight">Started exploring software development</div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</Layout>

@@ -1,0 +1,363 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/ui/Navbar.astro';
+import Starfield from '../../components/ui/Starfield.astro';
+import { CONSTELLATIONS } from '../../utils/astronomy';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  const count = Math.max(1, Math.min(10, projects.length));
+  const constellation = CONSTELLATIONS[count];
+
+  return projects.map((entry, index) => {
+    const star = constellation.stars[index] || constellation.stars[0];
+    const prevProject = projects[index - 1] || projects[projects.length - 1];
+    const nextProject = projects[index + 1] || projects[0];
+
+    return {
+      params: { slug: entry.id },
+      props: { 
+        entry, 
+        starName: star.name,
+        constellationName: constellation.name,
+        index: index + 1,
+        total: count,
+        prevProject,
+        nextProject
+      },
+    };
+  });
+}
+
+import { Image } from 'astro:assets';
+
+const { entry, starName, constellationName, index, total, prevProject, nextProject } = Astro.props;
+const { Content } = await render(entry);
+
+const seo = {
+  title: `${entry.data.title} — ${entry.data.domain} | Key Firdausi Al Farel`,
+  description: entry.data.description,
+  ogImage: entry.data.heroImage || '/images/og-image.png'
+};
+---
+
+<Layout seo={seo}>
+  <Starfield />
+  {/* Entry Transition Overlay */}
+  <div class="fixed inset-0 bg-deep-space z-[100] pointer-events-none animate-fade-out" transition:persist="overlay-fade"></div>
+
+  <div class="min-h-screen flex flex-col">
+    <Navbar />
+    
+    <main class="flex-grow max-w-4xl mx-auto w-full px-6 py-12 md:py-24">
+      
+      <a href="/#constellation" class="inline-flex items-center group font-mono text-xs text-muted-star hover:text-solar-gold transition-colors tracking-widest uppercase mb-12 md:mb-16 animate-project-fade-up" style="animation-delay: 0ms">
+        <span class="inline-block transition-transform duration-300 group-hover:-translate-x-1.5 mr-2">←</span> {constellationName}
+      </a>
+
+      <article>
+        <header class="mb-16 md:mb-24">
+          <div class="font-mono text-sm tracking-widest uppercase mb-8 text-muted-star animate-project-fade-up" style="animation-delay: 50ms">
+            <span>{constellationName}</span>
+            <span class="mx-3">·</span>
+            <span>{index.toString().padStart(2, '0')} / {total.toString().padStart(2, '0')}</span>
+            <span class="mx-3">·</span>
+            <span class="text-solar-gold font-bold">{starName}</span>
+          </div>
+          
+          <h1 class="font-display font-light text-5xl md:text-6xl text-starlight mb-6 uppercase tracking-tight leading-none animate-project-fade-up" style="animation-delay: 120ms">
+            {entry.data.title}
+          </h1>
+          
+          <div class="font-mono text-sm text-muted-star tracking-widest uppercase animate-project-fade-up" style="animation-delay: 220ms">
+            {entry.data.domain}
+          </div>
+        </header>
+
+        {entry.data.heroImage && (
+          <div class="w-full aspect-[16/9] border border-muted-star/20 bg-nebula-surface/30 mb-16 md:mb-24 overflow-hidden relative animate-image-reveal" style="animation-delay: 350ms">
+            <Image 
+              src={entry.data.heroImage} 
+              alt={entry.data.title}
+              width={1200}
+              height={675}
+              class="w-full h-full object-cover"
+            />
+          </div>
+        )}
+        
+        <div id="project-content" class="prose prose-invert prose-p:font-sans prose-p:text-muted-star prose-p:leading-relaxed prose-headings:font-display prose-headings:text-starlight prose-headings:font-light prose-h2:text-2xl prose-h2:mt-24 prose-h2:mb-8 prose-h2:uppercase prose-h2:tracking-wide prose-a:text-solar-gold prose-a:no-underline hover:prose-a:underline prose-pre:bg-nebula-surface prose-pre:border prose-pre:border-muted-star/30 prose-code:font-mono prose-code:text-sm prose-li:text-muted-star max-w-none">
+          <Content />
+        </div>
+
+        {entry.data.tech && (
+          <div class="mt-24 tech-stack-section">
+            <h2 class="font-display font-light text-2xl text-starlight mb-8 uppercase tracking-wide">TECH STACK</h2>
+            <div class="font-mono text-sm text-muted-star tracking-widest leading-loose flex flex-col gap-2">
+              {entry.data.tech.split('·').map((t, i) => (
+                <div class="tech-item" style={`transition-delay: ${i * 80}ms`}>{t.trim()}</div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        <div class="mt-24 border-t border-muted-star/20 pt-12 flex flex-col gap-12">
+           <div class="flex gap-8 font-mono text-sm tracking-widest uppercase">
+              {entry.data.github && <a href={entry.data.github} target="_blank" class="group text-starlight hover:text-solar-gold transition-colors">GITHUB <span class="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span></a>}
+              {entry.data.demo && <a href={entry.data.demo} target="_blank" class="group text-starlight hover:text-solar-gold transition-colors">LIVE DEMO <span class="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span></a>}
+           </div>
+           
+           <div class="flex justify-between items-center w-full">
+             <a href={`/projects/${prevProject.id}`} class="group flex flex-col items-start font-mono text-sm tracking-widest text-muted-star hover:text-solar-gold transition-colors text-left uppercase">
+                <span class="mb-1"><span class="inline-block transition-transform duration-300 group-hover:-translate-x-1.5 text-solar-gold mr-1">←</span> PREV STAR</span>
+                <span class="text-[10px] opacity-50">{prevProject.data.title}</span>
+             </a>
+
+             <a href={`/projects/${nextProject.id}`} class="group flex flex-col items-end font-mono text-sm tracking-widest text-muted-star hover:text-solar-gold transition-colors text-right uppercase">
+                <span class="mb-1">NEXT STAR <span class="inline-block transition-transform duration-300 group-hover:translate-x-1.5 text-solar-gold ml-1">→</span></span>
+                <span class="text-[10px] opacity-50">{nextProject.data.title}</span>
+             </a>
+           </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      // 1. Image Zoom Script (Existing)
+      const images = document.querySelectorAll('article img');
+      images.forEach(img => {
+        img.classList.add('cursor-pointer', 'transition-opacity', 'hover:opacity-80');
+        img.addEventListener('click', (e) => {
+          const target = e.target as HTMLImageElement;
+          const overlay = document.createElement('div');
+          overlay.className = 'fixed inset-0 z-[100] bg-deep-space/90 backdrop-blur-sm flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 p-4 md:p-8';
+          const modal = document.createElement('div');
+          modal.className = 'relative w-full max-w-6xl h-[75vh] border border-muted-star/30 bg-[#04060A] shadow-2xl flex items-center justify-center overflow-hidden rounded-sm';
+          const header = document.createElement('div');
+          header.className = 'absolute top-0 left-0 w-full flex justify-between items-center px-4 py-3 border-b border-muted-star/30 bg-deep-space/90 backdrop-blur-md z-50 font-mono text-xs tracking-widest text-muted-star uppercase pointer-events-none';
+          const titleText = target.alt ? target.alt.substring(0, 30) : 'SYSTEM DIAGNOSTIC';
+          header.innerHTML = `<span>[ IMG // ${titleText} ]</span><span class="text-solar-gold" id="scale-indicator">SCALE: 100%</span>`;
+          const wrapper = document.createElement('div');
+          wrapper.className = 'w-full h-full flex items-center justify-center';
+          const clone = document.createElement('img');
+          clone.src = target.src;
+          clone.alt = target.alt;
+          clone.className = 'max-w-full max-h-full object-contain cursor-grab transition-transform duration-75 relative z-10';
+          clone.draggable = false;
+          const footer = document.createElement('div');
+          footer.className = 'mt-6 font-mono text-xs text-muted-star/50 tracking-[0.2em] uppercase text-center flex flex-col gap-2 z-50';
+          footer.innerHTML = `<span>SCROLL TO ZOOM · DRAG TO PAN</span><button class="text-solar-gold hover:text-white transition-colors cursor-pointer py-2 px-4 border border-solar-gold/30 rounded-sm mt-2" id="close-modal-btn">CLOSE VIEWER</button>`;
+          wrapper.appendChild(clone);
+          modal.appendChild(header);
+          modal.appendChild(wrapper);
+          overlay.appendChild(modal);
+          overlay.appendChild(footer);
+          document.body.appendChild(overlay);
+          const scaleIndicator = overlay.querySelector('#scale-indicator');
+          document.body.style.overflow = 'hidden';
+          let scale = 1, translateX = 0, translateY = 0, isDragging = false, startX = 0, startY = 0;
+          const updateTransform = () => {
+            clone.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            if (scaleIndicator) scaleIndicator.innerHTML = `SCALE: ${Math.round(scale * 100)}%`;
+          };
+          modal.addEventListener('wheel', (ev) => {
+            ev.preventDefault();
+            scale = Math.max(0.5, Math.min(scale + (ev.deltaY > 0 ? -1 : 1) * 0.1, 6));
+            updateTransform();
+          });
+          clone.addEventListener('mousedown', (ev) => {
+            isDragging = true;
+            startX = ev.clientX - translateX;
+            startY = ev.clientY - translateY;
+            clone.style.cursor = 'grabbing';
+            ev.preventDefault();
+          });
+          window.addEventListener('mousemove', (ev) => {
+            if (!isDragging) return;
+            translateX = ev.clientX - startX;
+            translateY = ev.clientY - startY;
+            updateTransform();
+          });
+          window.addEventListener('mouseup', () => { isDragging = false; clone.style.cursor = 'grab'; });
+          let initialDist = 0;
+          clone.addEventListener('touchstart', (ev) => {
+            if (ev.touches.length === 1) {
+              isDragging = true;
+              startX = ev.touches[0].clientX - translateX;
+              startY = ev.touches[0].clientY - translateY;
+            } else if (ev.touches.length === 2) {
+              initialDist = Math.hypot(ev.touches[0].clientX - ev.touches[1].clientX, ev.touches[0].clientY - ev.touches[1].clientY);
+            }
+          });
+          modal.addEventListener('touchmove', (ev) => {
+            if (ev.touches.length === 1 && isDragging) {
+              translateX = ev.touches[0].clientX - startX;
+              translateY = ev.touches[0].clientY - startY;
+              updateTransform();
+            } else if (ev.touches.length === 2) {
+              ev.preventDefault();
+              const dist = Math.hypot(ev.touches[0].clientX - ev.touches[1].clientX, ev.touches[0].clientY - ev.touches[1].clientY);
+              if (initialDist > 0) {
+                scale = Math.max(0.5, Math.min(scale * (dist / initialDist), 6));
+                initialDist = dist;
+                updateTransform();
+              }
+            }
+          });
+          modal.addEventListener('touchend', () => { isDragging = false; initialDist = 0; });
+          requestAnimationFrame(() => { overlay.classList.remove('opacity-0'); overlay.classList.add('opacity-100'); });
+          const closeModal = () => {
+            overlay.classList.remove('opacity-100');
+            overlay.classList.add('opacity-0');
+            document.body.style.overflow = '';
+            setTimeout(() => { if (document.body.contains(overlay)) document.body.removeChild(overlay); }, 300);
+          };
+          overlay.addEventListener('click', (ev) => { if (ev.target === overlay) closeModal(); });
+          const closeBtn = overlay.querySelector('#close-modal-btn');
+          if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        });
+      });
+
+      // 2. Markdown Content Reveal Logic
+      const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (isReducedMotion) return;
+
+      const projectContent = document.getElementById('project-content');
+      if (projectContent) {
+        // Tag elements for reveal
+        const elementsToReveal = projectContent.querySelectorAll('h2, p, ul li, img');
+        elementsToReveal.forEach(el => {
+          el.classList.add('reveal-on-scroll');
+        });
+
+        // Add special handling for architecture / images scaling
+        projectContent.querySelectorAll('img').forEach(img => {
+          img.parentElement?.classList.add('scale-reveal-on-scroll');
+        });
+
+        // Stagger tech stack
+        document.querySelectorAll('.tech-item').forEach(el => el.classList.add('reveal-on-scroll'));
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              
+              // 3. Counter Animation for Result numbers
+              const prevHeading = entry.target.previousElementSibling;
+              if (prevHeading && prevHeading.tagName === 'H2' && prevHeading.textContent?.toUpperCase().includes('RESULT')) {
+                // Find potential number strings in the paragraph
+                const html = entry.target.innerHTML;
+                if (/\b\d+/.test(html)) {
+                  const walkDOM = (node: Node) => {
+                    if (node.nodeType === Node.TEXT_NODE && node.textContent) {
+                      const text = node.textContent;
+                      if (/\b\d+/.test(text)) {
+                        const span = document.createElement('span');
+                        span.innerHTML = text.replace(/(\d+)/g, '<span class="counter" data-target="$1">0</span>');
+                        node.parentNode?.replaceChild(span, node);
+                      }
+                    } else if (node.nodeType === Node.ELEMENT_NODE && node.nodeName !== 'SCRIPT' && node.nodeName !== 'STYLE') {
+                      Array.from(node.childNodes).forEach(walkDOM);
+                    }
+                  };
+                  
+                  if (!entry.target.hasAttribute('data-counted')) {
+                    entry.target.setAttribute('data-counted', 'true');
+                    walkDOM(entry.target);
+                    
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach((counter) => {
+                      const targetStr = counter.getAttribute('data-target');
+                      if (!targetStr) return;
+                      const target = parseInt(targetStr, 10);
+                      const duration = 700; // ms
+                      const start = performance.now();
+                      
+                      const updateCounter = (now: number) => {
+                        const progress = Math.min((now - start) / duration, 1);
+                        // Ease out cubic
+                        const easeOut = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.floor(easeOut * target);
+                        
+                        counter.textContent = current.toString();
+                        
+                        if (progress < 1) {
+                          requestAnimationFrame(updateCounter);
+                        } else {
+                          counter.textContent = target.toString(); // Ensure it hits the exact target
+                        }
+                      };
+                      
+                      requestAnimationFrame(updateCounter);
+                    });
+                  }
+                }
+              }
+              
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-on-scroll, .scale-reveal-on-scroll').forEach(el => {
+          observer.observe(el);
+        });
+      }
+    });
+  </script>
+</Layout>
+
+<style is:global>
+  .animate-project-fade-up {
+    animation: projectFadeUp 0.8s cubic-bezier(0.2, 0, 0, 1) forwards;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  
+  .animate-image-reveal {
+    animation: imageReveal 0.8s cubic-bezier(0.2, 0, 0, 1) forwards;
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  .animate-fade-out {
+    animation: fadeOut 0.5s ease-in forwards;
+  }
+
+  @keyframes projectFadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes imageReveal {
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+  }
+
+  /* Markdown Reveal Classes */
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0, 0, 1), transform 0.7s cubic-bezier(0.2, 0, 0, 1);
+  }
+  .reveal-on-scroll.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .scale-reveal-on-scroll {
+    opacity: 0;
+    transform: scale(0.97);
+    transition: opacity 0.7s cubic-bezier(0.2, 0, 0, 1), transform 0.7s cubic-bezier(0.2, 0, 0, 1);
+  }
+  .scale-reveal-on-scroll.is-revealed {
+    opacity: 1;
+    transform: scale(1);
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+title: "Smart Eco-Campus"
+description: "An IoT-based energy monitoring and management system for university facilities."
+status: "COMPLETED"
+domain: "IoT · Energy · Data"
+date: 2026-08-23
+heroImage: "/images/smart-eco-campus-hero.png"
+architectureImage: "/images/smart-eco-campus-arch.png"
+github: "https://github.com/keyfirdausi/smart-eco-campus"
+demo: "https://smart-eco-campus.demo"
+tech: "ESP32 · Next.js · Firebase · YOLOv8"
+---
+
+## OVERVIEW
+
+An IoT-based energy monitoring and management system designed to track, visualize, and analyze power consumption across university facilities in real time. The project aims to identify energy waste patterns and provide actionable insights for sustainability initiatives.
+
+## THE SYSTEM
+
+The system uses a distributed network of smart energy meters. Data is pushed over MQTT to a centralized cloud database, then visualized in a high-performance web dashboard.
+
+![System Architecture](/images/smart-eco-campus-arch.png)
+
+## MY CONTRIBUTION
+
+- Designed the hardware schematic integrating ESP32 and PZEM-004T.
+- Developed the real-time data ingestion pipeline using Firebase and WebSockets.
+- Built the interactive Next.js dashboard with specialized energy visualization charts.
+- Optimized the sensor firmware to recover gracefully from network outages.
+
+## CHALLENGES
+
+One of the biggest challenges was ensuring data consistency when the campus Wi-Fi dropped. I implemented a local ring-buffer on the ESP32 that caches up to 4 hours of telemetry data and bulk-uploads it when the connection is restored, ensuring zero data loss.
+
+## RESULT
+
+Deployed across 3 main faculty buildings, tracking over 50 endpoints. The system identified a 15% overnight power bleed from idle lab equipment, which has since been mitigated through automated power-down schedules.

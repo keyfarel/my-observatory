@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/ui/Navbar.astro';
+
+const seo = {
+  title: 'Contact Key Firdausi Al Farel',
+  description: 'Get in touch with Key Firdausi Al Farel for collaborations, inquiries, or discussions on software engineering and IoT.'
+};
+---
+
+<Layout seo={seo}>
+  <div class="min-h-screen flex flex-col">
+    <Navbar />
+    
+    <main class="flex-grow max-w-3xl mx-auto w-full px-6 py-12 md:py-32 flex flex-col items-center text-center">
+      
+      <div class="font-mono text-solar-gold text-xs tracking-[0.3em] uppercase mb-8">
+        OPEN CHANNEL
+      </div>
+      
+      <h1 class="font-display font-light text-4xl md:text-5xl text-starlight mb-12">
+        Have something interesting<br />to build?
+      </h1>
+      
+      <div class="flex flex-col sm:flex-row gap-6 font-mono text-sm tracking-widest uppercase mb-16">
+        <a href="mailto:hello@example.com" class="text-muted-star hover:text-starlight transition-colors">EMAIL</a>
+        <span class="hidden sm:inline text-muted-star/30">/</span>
+        <a href="https://github.com" target="_blank" class="text-muted-star hover:text-starlight transition-colors">GITHUB</a>
+        <span class="hidden sm:inline text-muted-star/30">/</span>
+        <a href="https://linkedin.com" target="_blank" class="text-muted-star hover:text-starlight transition-colors">LINKEDIN</a>
+      </div>
+      
+      <a href="mailto:hello@example.com" class="inline-block font-mono text-sm tracking-[0.2em] text-solar-gold border border-solar-gold/30 hover:border-solar-gold hover:bg-solar-gold/5 px-8 py-4 transition-all duration-300 rounded-sm">
+        [ SEND A MESSAGE ]
+      </a>
+      
+    </main>
+  </div>
+</Layout>

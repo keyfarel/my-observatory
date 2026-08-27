@@ -1,0 +1,50 @@
+---
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+
+import '../styles/global.css';
+import SEO from '../components/seo/SEO.astro';
+
+import { ClientRouter } from 'astro:transitions';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  seo?: {
+    title: string;
+    description: string;
+    ogImage?: string;
+    canonical?: string;
+    jsonLd?: any;
+  };
+}
+
+const { 
+  title,
+  description,
+  seo
+} = Astro.props;
+
+const seoProps = seo || {
+  title: title || 'Key Firdausi Al Farel — Software Engineer',
+  description: description || 'Key Firdausi Al Farel is a software engineer interested in IoT, data, and systems that connect software with the physical world.',
+};
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/images/favico.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO {...seoProps} />
+    <ClientRouter />
+  </head>
+  <body class="text-starlight overflow-x-hidden bg-transparent relative">
+    <slot />
+  </body>
+</html>

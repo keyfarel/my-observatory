@@ -1,0 +1,167 @@
+---
+const pathname = new URL(Astro.request.url).pathname;
+
+const isWorkActive = pathname.startsWith('/projects') || pathname === '/';
+const isLabActive = pathname.startsWith('/experiments');
+const isAboutActive = pathname.startsWith('/about');
+const isContactActive = pathname.startsWith('/contact');
+
+const getDesktopClass = (isActive: boolean) => 
+  isActive ? "transition-colors text-solar-gold font-bold" : "transition-colors text-muted-star hover:text-starlight nav-item";
+---
+
+<nav class="w-full flex items-center justify-between p-6 lg:p-12 z-50 sticky top-0 bg-deep-space font-mono text-[12.5px] tracking-[0.04em] uppercase border-b border-transparent transition-colors">
+  <a href="/" class="text-starlight hover:text-solar-gold transition-colors text-[13px] font-bold relative z-[60]">
+    [ KF ]
+  </a>
+  
+  <div class="hidden lg:flex gap-8">
+    <a href="/#about" data-section="about" class={getDesktopClass(isAboutActive)}>ABOUT</a>
+    <a href="/#constellation" data-section="constellation" class={getDesktopClass(isWorkActive)}>WORK</a>
+    <a href="/#laboratory" data-section="laboratory" class={getDesktopClass(isLabActive)}>LAB</a>
+    <a href="/#contact" data-section="contact" class={getDesktopClass(isContactActive)}>CONTACT</a>
+  </div>
+  
+  <button id="mobile-menu-toggle" aria-label="Toggle mobile menu" class="relative z-[60] w-8 h-8 flex lg:hidden items-center justify-center focus:outline-none">
+    <span class="line-1 absolute w-6 h-[1px] bg-starlight transition-transform duration-300 -translate-y-2"></span>
+    <span class="line-2 absolute w-6 h-[1px] bg-starlight transition-opacity duration-300"></span>
+    <span class="line-3 absolute w-6 h-[1px] bg-starlight transition-transform duration-300 translate-y-2"></span>
+  </button>
+
+  {/* Dropdown Mobile Menu */}
+  <div id="mobile-menu" class="absolute top-full left-0 w-full bg-deep-space flex flex-col opacity-0 pointer-events-none transition-all duration-300 overflow-hidden border-b border-muted-star/20 shadow-2xl pb-6 z-40">
+    <div class="w-full flex flex-col px-8 pt-6 pb-4">
+      <div class="flex flex-col gap-6 w-full items-center text-center">
+        <a href="/#about" data-section="about" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
+          <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isAboutActive ? 'text-solar-gold' : 'text-starlight'}`}>ABOUT</span>
+          <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isAboutActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
+        </a>
+
+        <a href="/#constellation" data-section="constellation" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
+          <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isWorkActive ? 'text-solar-gold' : 'text-starlight'}`}>WORK</span>
+          <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isWorkActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
+        </a>
+        
+        <a href="/#laboratory" data-section="laboratory" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
+          <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isLabActive ? 'text-solar-gold' : 'text-starlight'}`}>LAB</span>
+          <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isLabActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
+        </a>
+
+        <a href="/#contact" data-section="contact" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
+          <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isContactActive ? 'text-solar-gold' : 'text-starlight'}`}>CONTACT</span>
+          <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isContactActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* Remove default mobile tap highlight block */
+  .mobile-link {
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Custom Hamburger Animation - Fix for Tailwind v4 translate property */
+  #mobile-menu-toggle.menu-open .line-1 {
+    translate: 0 0 !important;
+    transform: rotate(45deg);
+  }
+  #mobile-menu-toggle.menu-open .line-2 {
+    opacity: 0;
+  }
+  #mobile-menu-toggle.menu-open .line-3 {
+    translate: 0 0 !important;
+    transform: rotate(-45deg);
+  }
+</style>
+
+<script>
+document.addEventListener('astro:page-load', () => {
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const links = document.querySelectorAll('.mobile-link');
+  const mobileNavItems = document.querySelectorAll('#mobile-menu .nav-item');
+  let isOpen = false;
+
+  const toggleMenu = () => {
+    isOpen = !isOpen;
+    if (isOpen) {
+      menu?.classList.remove('opacity-0', 'pointer-events-none');
+      menu?.classList.add('opacity-100', 'pointer-events-auto');
+      toggleBtn?.classList.add('menu-open');
+      
+      mobileNavItems.forEach((item, index) => {
+        setTimeout(() => {
+          item.classList.remove('opacity-0');
+          item.classList.add('opacity-100');
+        }, 50 * (index + 1));
+      });
+    } else {
+      menu?.classList.remove('opacity-100', 'pointer-events-auto');
+      menu?.classList.add('opacity-0', 'pointer-events-none');
+      toggleBtn?.classList.remove('menu-open');
+      
+      mobileNavItems.forEach(item => {
+        item.classList.remove('opacity-100');
+        item.classList.add('opacity-0');
+      });
+    }
+  };
+
+  // Safe listener attachment
+  toggleBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleMenu();
+  });
+  
+  links.forEach(link => link.addEventListener('click', () => {
+    if (isOpen) toggleMenu();
+  }));
+
+  // Intersection Observer
+  const sections = document.querySelectorAll('section[id]');
+  const allNavItems = document.querySelectorAll('[data-section]');
+
+  if (sections.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          allNavItems.forEach(item => {
+            const isActive = item.getAttribute('data-section') === id;
+            
+            if (item.classList.contains('mobile-link')) {
+              const textSpan = item.querySelector('span:nth-child(1)');
+              const underlineSpan = item.querySelector('span:nth-child(2)');
+              
+              if (isActive) {
+                textSpan?.classList.add('text-solar-gold');
+                textSpan?.classList.remove('text-starlight');
+                underlineSpan?.classList.add('scale-x-100');
+                underlineSpan?.classList.remove('scale-x-0');
+              } else {
+                textSpan?.classList.remove('text-solar-gold');
+                textSpan?.classList.add('text-starlight');
+                underlineSpan?.classList.remove('scale-x-100');
+                underlineSpan?.classList.add('scale-x-0');
+              }
+            } else {
+              if (isActive) {
+                item.classList.add('text-solar-gold', 'font-bold');
+                item.classList.remove('text-muted-star');
+              } else {
+                item.classList.remove('text-solar-gold', 'font-bold');
+                item.classList.add('text-muted-star');
+              }
+            }
+          });
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -80% 0px'
+    });
+
+    sections.forEach(section => observer.observe(section));
+  }
+});
+</script>

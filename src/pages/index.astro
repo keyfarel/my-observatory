@@ -1,0 +1,487 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Starfield from '../components/ui/Starfield.astro';
+import Navbar from '../components/ui/Navbar.astro';
+import Map from '../components/constellation/Map';
+import Orbit from '../components/ui/Orbit';
+
+import { getCollection } from 'astro:content';
+
+const projectsData = await getCollection('projects');
+// Map the collection to the expected format for Map.tsx
+const projects = projectsData.map(p => ({
+  id: p.id,
+  slug: p.id,
+  data: {
+    title: p.data.title,
+    domain: p.data.domain
+  }
+}));
+
+const experiments = [
+  { idNumber: '014', title: 'ESP32 RELAY CONTROL', domain: 'Hardware / ESP32', status: 'COMPLETED', outcome: 'Relay switching & GPIO control', evidence: 'CODE · SERIAL LOG' },
+  { idNumber: '013', title: 'MQTT COMMUNICATION', domain: 'IoT / Networking', status: 'ONGOING', outcome: 'Publish/subscribe latency tests', evidence: 'SERIAL LOG' },
+  { idNumber: '012', title: 'PLC FUNDAMENTALS', domain: 'Industrial Automation', status: 'ARCHIVED', outcome: 'Ladder logic implementation', evidence: 'SCHEMATIC' },
+  { idNumber: '011', title: 'PHONE HARDWARE', domain: 'Electronics / Repair', status: 'COMPLETED', outcome: 'Screen & battery replacement', evidence: 'PHOTO' }
+];
+
+const seo = {
+  title: 'Key Firdausi Al Farel — Software Engineer',
+  description: 'Key Firdausi Al Farel is a software engineer interested in IoT, data, and systems that connect software with the physical world.',
+  ogImage: '/images/og-image.png',
+  jsonLd: {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Key Firdausi Al Farel",
+    "jobTitle": "Software Engineer",
+    "url": "https://keyfirdausi.dev",
+    "sameAs": [
+      "https://github.com/keyfirdaus",
+      "https://linkedin.com/in/keyfirdaus"
+    ]
+  }
+};
+
+
+---
+
+<Layout seo={seo}>
+  <Starfield />
+  <Navbar />
+  
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6">
+    
+    {/* HERO SECTION */}
+    <section class="min-h-[100svh] flex flex-col justify-center pt-[100px] pb-24" id="hero">
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-16 xl:gap-8 items-center w-full">
+        
+        {/* Left Column: Human / Identity */}
+        <div class="xl:col-span-7 flex flex-col justify-center">
+          <div class="font-mono text-[10px] md:text-xs tracking-[0.2em] mb-12 xl:mb-[72px]">
+            <div class="text-starlight mb-4 uppercase reveal" style="transition-delay: 100ms">Key Firdausi Al Farel</div>
+            <div class="text-solar-gold uppercase reveal" style="transition-delay: 180ms">Software Engineer</div>
+            <div class="text-muted-star reveal" style="transition-delay: 240ms">IoT · Data · Systems</div>
+          </div>
+          
+          <h1 class="font-display font-normal text-[clamp(3.5rem,5vw,5rem)] leading-[0.95] tracking-[-0.045em] text-starlight mb-[44px] reveal" style="transition-delay: 300ms">
+            PERSONAL<br />OBSERVATORY
+          </h1>
+          
+          <p class="font-display text-[clamp(1rem,1.2vw,1.25rem)] text-muted-star max-w-lg uppercase tracking-[0.02em] leading-[1.7] mb-[52px] reveal" style="transition-delay: 450ms">
+            I build systems<br class="hidden md:block"/> between software<br class="hidden md:block"/> and the physical world.
+          </p>
+          
+          <div class="reveal" style="transition-delay: 600ms">
+            <a href="#constellation" class="inline-flex items-center justify-center font-mono text-[13px] tracking-[0.2em] text-starlight border border-muted-star/30 hover:border-starlight hover:bg-starlight/5 h-[50px] px-[32px] transition-all duration-300 rounded-none hover:-translate-y-0.5 group">
+              <span class="mr-2 opacity-50 group-hover:opacity-100 transition-opacity">[</span>
+              EXPLORE MY WORK
+              <span class="ml-2 opacity-50 group-hover:opacity-100 transition-opacity">]</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Right Column: System / Observatory */}
+        <div class="xl:col-span-5 hidden md:flex flex-col justify-center items-end xl:items-center reveal" style="transition-delay: 800ms">
+          
+          <div class="w-full max-w-[420px] border border-muted-star/20 bg-deep-space/40 backdrop-blur-sm rounded-sm p-8 xl:p-10 font-mono text-[11px] tracking-widest text-muted-star relative overflow-hidden">
+            {/* Subtle Grid Background */}
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(126,137,152,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(126,137,152,0.05)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none"></div>
+            
+            <div class="relative z-10">
+              {/* Header */}
+              <div class="flex justify-between items-center mb-8 pb-5 border-b border-muted-star/20 text-xs">
+                <span class="text-starlight">SYSTEM 001</span>
+                <span class="text-solar-gold animate-pulse">● LIVE</span>
+              </div>
+
+            {/* Architecture Node Diagram */}
+            <div class="mb-10 flex flex-col items-center">
+              <div class="w-1.5 h-1.5 rounded-full bg-starlight mb-2"></div>
+              <div class="w-[80%] h-px bg-muted-star/30 flex justify-between items-center relative">
+                <div class="absolute inset-x-0 top-0 h-4 flex justify-between px-2">
+                  <div class="w-px h-full bg-muted-star/30"></div>
+                  <div class="w-px h-full bg-muted-star/30"></div>
+                  <div class="w-px h-full bg-muted-star/30"></div>
+                </div>
+              </div>
+              <div class="w-[80%] flex justify-between items-center px-2 mt-4 text-[9px] text-muted-star/70">
+                <span>IoT</span>
+                <span>DATA</span>
+                <span>SOFT</span>
+              </div>
+            </div>
+
+            {/* Diagnostics */}
+            <div class="space-y-4 mb-8">
+              <div class="flex justify-between">
+                <span>SYSTEM STATUS</span>
+                <span class="text-starlight">SYNCED</span>
+              </div>
+              <div class="flex justify-between">
+                <span>DATA PIPELINE</span>
+                <span class="text-starlight">ACTIVE</span>
+              </div>
+              <div class="flex justify-between">
+                <span>HARDWARE NODE</span>
+                <span class="text-muted-star/70">POLLING</span>
+              </div>
+            </div>
+
+            {/* Footer Metrics */}
+            <div class="pt-6 border-t border-muted-star/20">
+              <div class="flex gap-12">
+                <div class="flex flex-col gap-1">
+                  <span class="text-muted-star/50">PROJECTS</span>
+                  <span class="text-starlight">{projects.length < 10 ? `0${projects.length}` : projects.length}</span>
+                </div>
+                <div class="flex flex-col gap-1">
+                  <span class="text-muted-star/50">SYSTEMS</span>
+                  <span class="text-starlight">04</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Vertical Index Indicator */}
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 hidden 2xl:flex flex-col items-center gap-4 text-muted-star/30 font-mono text-[10px] tracking-[0.3em]" style="writing-mode: vertical-rl">
+          <span class="text-solar-gold/70">01 / 04</span>
+          <div class="w-px h-12 bg-muted-star/20"></div>
+          <span>INTRODUCTION</span>
+        </div>
+
+      </div>
+      </div>
+    </section>
+
+    {/* THE OBSERVER */}
+    <section id="about" class="py-24 border-t border-muted-star/20 scroll-mt-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8">
+        <div class="lg:col-span-8">
+          <header class="mb-12 reveal">
+            <h2 class="font-display font-light text-4xl text-starlight mb-2 uppercase">THE OBSERVER</h2>
+            <p class="font-mono text-xs text-muted-star uppercase tracking-widest mt-2">Who I am</p>
+          </header>
+          
+          <div class="prose prose-invert prose-p:font-sans prose-p:text-starlight prose-p:text-base prose-p:leading-relaxed max-w-none">
+            <p class="reveal">
+              I'm Key, a software engineer interested in systems that connect software with the physical world.
+            </p>
+            <p class="reveal">
+              I like understanding how things work, then building something from that understanding.
+            </p>
+            <p class="text-muted-star mt-12 mb-4 reveal">
+              My interests sit somewhere between:
+            </p>
+            <div class="font-mono text-solar-gold text-sm tracking-widest leading-loose flex flex-col gap-1 mt-4">
+              <span class="reveal-x" style="transition-delay: 0ms">SOFTWARE</span>
+              <span class="reveal-x" style="transition-delay: 80ms">IoT</span>
+              <span class="reveal-x" style="transition-delay: 160ms">DATA</span>
+              <span class="reveal-x" style="transition-delay: 240ms">SYSTEMS</span>
+              <span class="reveal-x" style="transition-delay: 320ms">HARDWARE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* CONSTELLATION */}
+    <section id="constellation" class="py-24 border-t border-muted-star/20 scroll-mt-20">
+      <header class="mb-12 reveal">
+        <h2 class="font-display font-light text-4xl text-starlight mb-2">CONSTELLATION</h2>
+        <p class="font-mono text-xs text-muted-star uppercase tracking-widest">Selected Works & Systems</p>
+      </header>
+      
+      <div class="w-full aspect-[4/5] md:aspect-auto md:h-[500px] mb-16">
+        <Map client:load projects={projects} />
+      </div>
+
+      {projects.length > 0 && (
+        <div class="reveal">
+          <a href={`/projects/${projects[0].slug || projects[0].id}`} class="group block border border-muted-star/20 bg-deep-space/40 hover:bg-nebula-surface/30 p-8 md:p-12 transition-all duration-300 relative overflow-hidden">
+            <div class="absolute right-0 top-0 w-64 h-64 bg-solar-gold/5 blur-[100px] rounded-full group-hover:bg-solar-gold/10 transition-colors"></div>
+            
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+              <div class="md:col-span-8">
+                <div class="font-mono text-solar-gold text-xs tracking-widest mb-4 flex items-center gap-3">
+                  <span class="w-1.5 h-1.5 rounded-full bg-solar-gold animate-pulse"></span>
+                  FEATURED SYSTEM
+                </div>
+                
+                <h3 class="font-display text-3xl md:text-5xl text-starlight mb-6 uppercase tracking-tight">
+                  {projects[0].data.title}
+                </h3>
+                
+                <p class="font-mono text-sm text-muted-star mb-8 max-w-xl leading-relaxed">
+                  {projects[0].data.description || 'A complex system built at the intersection of software and the physical world, focusing on data acquisition and hardware integration.'}
+                </p>
+                
+                <div class="flex flex-wrap gap-3 font-mono text-xs text-muted-star/70 uppercase">
+                  <span class="px-3 py-1 border border-muted-star/20 rounded-sm">IoT</span>
+                  <span class="px-3 py-1 border border-muted-star/20 rounded-sm">Data Pipeline</span>
+                  <span class="px-3 py-1 border border-muted-star/20 rounded-sm">Hardware</span>
+                </div>
+              </div>
+              
+              <div class="md:col-span-4 flex md:justify-end mt-8 md:mt-0">
+                <div class="inline-flex items-center gap-3 font-mono text-xs tracking-widest text-starlight border border-muted-star/30 px-6 py-3 group-hover:border-solar-gold/50 group-hover:text-solar-gold transition-colors">
+                  VIEW PROJECT <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      )}
+    </section>
+
+    {/* LABORATORY */}
+    <section id="laboratory" class="py-24 border-t border-muted-star/20 scroll-mt-20">
+      <header class="mb-16 reveal">
+        <h2 class="font-display font-light text-4xl text-starlight mb-2">LABORATORY</h2>
+        <p class="font-mono text-xs text-muted-star uppercase tracking-widest">Active Experiments & Explorations</p>
+      </header>
+      
+      <div class="space-y-12">
+        {experiments.map((exp, i) => (
+          <a href={`/experiments/${exp.idNumber}`} class={`reveal group block border border-transparent border-b-muted-star/10 p-6 -mx-6 hover:bg-nebula-surface/10 hover:border-muted-star/20 transition-all duration-300`} style={`transition-delay: ${i * 100}ms`}>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 items-start">
+              <div class="md:col-span-8">
+                <div class="font-mono text-solar-gold text-xs tracking-widest mb-2 flex items-center gap-2 transition-transform duration-300 group-hover:translate-x-1">
+                  EXPERIMENT {exp.idNumber} <span class="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                </div>
+                <h3 class="font-display text-2xl text-starlight group-hover:text-solar-gold transition-colors mb-2 uppercase tracking-tight">
+                  {exp.title}
+                </h3>
+                <div class="font-mono text-sm text-muted-star mb-3">
+                  {exp.domain}
+                </div>
+              </div>
+              <div class="md:col-span-4 font-mono text-xs flex flex-col md:items-end gap-2 text-left md:text-right mt-2 md:mt-0">
+                <div class="flex flex-wrap gap-2 md:justify-end">
+                  <div class={`inline-flex items-center gap-1.5 px-2 py-1 bg-deep-space border ${exp.status === 'COMPLETED' ? 'border-starlight/20 text-starlight' : exp.status === 'ONGOING' ? 'border-solar-gold/20 text-solar-gold' : 'border-muted-star/20 text-muted-star'} uppercase tracking-widest`}>
+                    {exp.status === 'ONGOING' && <span class="w-1 h-1 rounded-full bg-solar-gold animate-pulse"></span>}
+                    {exp.status}
+                  </div>
+                </div>
+                <div class="text-starlight/80 text-[11px] uppercase tracking-wide leading-relaxed">
+                  {exp.outcome}
+                </div>
+                <div class="text-muted-star/50 text-[9px] uppercase tracking-[0.2em] mt-1">
+                  {exp.evidence}
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    {/* TOOLKIT */}
+    <section id="toolkit" class="py-24 border-t border-muted-star/20 scroll-mt-20">
+      <header class="mb-12 reveal">
+        <h2 class="font-display font-light text-4xl text-starlight mb-2 uppercase">TOOLKIT</h2>
+        <p class="font-mono text-xs text-muted-star uppercase tracking-widest mt-2 max-w-sm leading-relaxed">
+          Technologies I use to build systems across software and hardware.
+        </p>
+      </header>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 font-mono text-sm reveal" style="transition-delay: 100ms">
+        <div>
+          <h3 class="text-solar-gold tracking-widest uppercase mb-4 text-xs">SOFTWARE</h3>
+          <div class="text-starlight leading-relaxed">
+            PHP <span class="text-muted-star/50 mx-2">·</span> Laravel <span class="text-muted-star/50 mx-2">·</span> TypeScript <span class="text-muted-star/50 mx-2">·</span> JavaScript
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-solar-gold tracking-widest uppercase mb-4 text-xs">DATA</h3>
+          <div class="text-starlight leading-relaxed">
+            MySQL <span class="text-muted-star/50 mx-2">·</span> SQL Server <span class="text-muted-star/50 mx-2">·</span> Firebase
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-solar-gold tracking-widest uppercase mb-4 text-xs">SYSTEMS</h3>
+          <div class="text-starlight leading-relaxed">
+            ESP32 <span class="text-muted-star/50 mx-2">·</span> MQTT <span class="text-muted-star/50 mx-2">·</span> Linux <span class="text-muted-star/50 mx-2">·</span> Git
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    {/* CURRENTLY */}
+    <section id="currently" class="py-24 border-t border-muted-star/20 scroll-mt-20">
+      <header class="mb-12 reveal">
+        <h2 class="font-display font-light text-4xl text-starlight mb-2 uppercase">CURRENTLY</h2>
+        <p class="font-mono text-xs text-muted-star uppercase tracking-widest mt-2">What I'm doing now</p>
+      </header>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 font-mono text-sm">
+        <div class="reveal">
+          <div class="flex items-center gap-3 text-solar-gold mb-3 tracking-widest uppercase text-xs">
+            BUILDING
+          </div>
+          <div class="text-starlight leading-relaxed">Personal Observatory</div>
+        </div>
+        
+        <div class="reveal" style="transition-delay: 100ms">
+          <div class="flex items-center gap-3 text-solar-gold mb-3 tracking-widest uppercase text-xs">
+            EXPLORING
+          </div>
+          <div class="text-starlight leading-relaxed">IoT <span class="text-muted-star/50 mx-1">·</span> Electronics <span class="text-muted-star/50 mx-1">·</span> Industrial Systems</div>
+        </div>
+        
+        <div class="reveal" style="transition-delay: 200ms">
+          <div class="flex items-center gap-3 text-solar-gold mb-3 tracking-widest uppercase text-xs">
+            LEARNING
+          </div>
+          <div class="text-starlight leading-relaxed">Cloud <span class="text-muted-star/50 mx-1">·</span> Distributed Systems</div>
+        </div>
+        
+        <div class="reveal" style="transition-delay: 300ms">
+          <div class="flex items-center gap-3 text-solar-gold mb-3 tracking-widest uppercase text-xs">
+             LOOKING FOR
+          </div>
+          <div class="text-starlight leading-relaxed">Software Engineering / IoT Opportunities</div>
+        </div>
+      </div>
+    </section>
+
+    {/* ORBIT */}
+    <section id="orbit-section" class="py-24 border-t border-muted-star/20 scroll-mt-20">
+      <header class="mb-12 reveal">
+        <h2 class="font-display font-light text-4xl text-starlight mb-2 uppercase">ORBIT</h2>
+        <p class="font-mono text-xs text-muted-star uppercase tracking-widest mt-2">Where I've been / where I'm going</p>
+      </header>
+      
+      <div class="reveal" style="transition-delay: 100ms">
+        <Orbit client:load />
+      </div>
+    </section>
+
+    {/* OPEN CHANNEL & FOOTER */}
+    <section id="contact" class="pt-32 pb-8 border-t border-muted-star/20 reveal">
+      <div class="mb-32">
+        <h2 class="font-display font-normal text-3xl md:text-4xl text-starlight mb-16 tracking-wide uppercase">
+          OPEN CHANNEL
+        </h2>
+        
+        <p class="font-display text-xl text-muted-star mb-20 reveal">
+          Let's build something interesting.
+        </p>
+        
+        <div class="flex flex-col font-mono reveal" style="transition-delay: 100ms">
+          {/* Email Row */}
+          <a href="mailto:key.firdausi@example.com" class="group flex flex-col md:flex-row md:items-center justify-between py-8 border-t border-muted-star/20 hover:border-starlight/50 transition-colors">
+            <span class="text-[11px] text-muted-star tracking-[0.2em] mb-3 md:mb-0 w-48">EMAIL</span>
+            <span class="text-starlight text-lg md:text-xl lg:text-2xl group-hover:text-solar-gold transition-colors flex-1 tracking-tight">key.firdausi@example.com</span>
+            <span class="text-muted-star group-hover:text-solar-gold transition-transform duration-300 group-hover:translate-x-2 hidden md:block">→</span>
+          </a>
+          
+          {/* GitHub Row */}
+          <a href="https://github.com/keyfirdaus" target="_blank" class="group flex flex-col md:flex-row md:items-center justify-between py-8 border-t border-muted-star/20 hover:border-starlight/50 transition-colors">
+            <span class="text-[11px] text-muted-star tracking-[0.2em] mb-3 md:mb-0 w-48">GITHUB</span>
+            <span class="text-starlight text-lg md:text-xl lg:text-2xl group-hover:text-solar-gold transition-colors flex-1 tracking-tight">github.com/keyfirdaus</span>
+            <span class="text-muted-star group-hover:text-solar-gold transition-transform duration-300 group-hover:translate-x-2 hidden md:block">→</span>
+          </a>
+          
+          {/* LinkedIn Row */}
+          <a href="https://linkedin.com/in/keyfirdaus" target="_blank" class="group flex flex-col md:flex-row md:items-center justify-between py-8 border-y border-muted-star/20 hover:border-starlight/50 transition-colors">
+            <span class="text-[11px] text-muted-star tracking-[0.2em] mb-3 md:mb-0 w-48">LINKEDIN</span>
+            <span class="text-starlight text-lg md:text-xl lg:text-2xl group-hover:text-solar-gold transition-colors flex-1 tracking-tight">linkedin.com/in/keyfirdaus</span>
+            <span class="text-muted-star group-hover:text-solar-gold transition-transform duration-300 group-hover:translate-x-2 hidden md:block">→</span>
+          </a>
+        </div>
+      </div>
+      
+      <footer class="pt-16 pb-8 reveal">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-12 mb-32">
+          <div class="md:col-span-6 lg:col-span-8">
+            <div class="font-display font-bold text-xl text-starlight mb-6">KF</div>
+            <div class="font-mono text-[11px] text-muted-star space-y-1.5 tracking-widest">
+              <div class="text-starlight uppercase">KEY FIRDAUSI AL FAREL</div>
+              <div class="uppercase">Software Engineer</div>
+              <div>IoT · Data · Systems</div>
+            </div>
+          </div>
+          
+          <div class="md:col-span-3 lg:col-span-2 font-mono text-[10px] tracking-widest">
+            <div class="text-muted-star/50 mb-6 uppercase">EXPLORE</div>
+            <div class="flex flex-col gap-4">
+              <a href="#constellation" class="text-starlight hover:text-solar-gold transition-colors">WORK</a>
+              <a href="#laboratory" class="text-starlight hover:text-solar-gold transition-colors">LAB</a>
+              <a href="#notes" class="text-starlight hover:text-solar-gold transition-colors">NOTES</a>
+              <a href="#about" class="text-starlight hover:text-solar-gold transition-colors">ABOUT</a>
+            </div>
+          </div>
+          
+          <div class="md:col-span-3 lg:col-span-2 font-mono text-[10px] tracking-widest">
+            <div class="text-muted-star/50 mb-6 uppercase">CONNECT</div>
+            <div class="flex flex-col gap-4">
+              <a href="https://github.com/keyfirdaus" target="_blank" class="text-starlight hover:text-solar-gold transition-colors">GITHUB</a>
+              <a href="https://linkedin.com/in/keyfirdaus" target="_blank" class="text-starlight hover:text-solar-gold transition-colors">LINKEDIN</a>
+              <a href="mailto:key.firdausi@example.com" class="text-starlight hover:text-solar-gold transition-colors">EMAIL</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+  </div>
+</Layout>
+
+<script>
+  // Simple Intersection Observer to trigger reveal classes globally
+  document.addEventListener('astro:page-load', () => {
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    // Fallback if reduced motion is enabled
+    if (isReducedMotion) {
+      document.querySelectorAll('.reveal, .reveal-x, .orbit-line').forEach(el => {
+        el.classList.add('active');
+      });
+      return;
+    }
+
+    // Normal Observer
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -10% 0px', // Trigger slightly before it hits bottom of viewport
+      threshold: 0.1
+    };
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); // Only trigger once
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-x').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // Special observer for orbit line
+    const orbitSection = document.getElementById('orbit-section');
+    const orbitLine = document.querySelector('.orbit-line');
+    
+    if (orbitSection && orbitLine) {
+      const orbitObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          orbitLine.classList.add('active');
+          orbitObserver.disconnect();
+        }
+      }, { threshold: 0.2 });
+      
+      orbitObserver.observe(orbitSection);
+    }
+    
+    // Also trigger immediately for elements already in viewport (like Hero)
+    setTimeout(() => {
+      document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('active'));
+    }, 50);
+  });
+</script>

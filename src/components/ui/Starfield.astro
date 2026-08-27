@@ -1,0 +1,228 @@
+---
+// A dynamic interactive Starfield background
+---
+
+<div class="absolute inset-0 z-[-1] overflow-hidden bg-deep-space" transition:persist="starfield-bg">
+  <!-- Dynamic atmospheric gradient (Fixed to viewport) -->
+  <div id="space-gradient" class="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#111722]/50 via-deep-space to-deep-space opacity-80 transition-colors duration-1000 ease-in-out"></div>
+  
+  <!-- 3D Parallax Star Layers (Absolute to document) -->
+  <div id="stars-far" class="absolute inset-0 will-change-transform opacity-70"></div>
+  <div id="stars-mid" class="absolute inset-0 will-change-transform opacity-90"></div>
+  <div id="stars-near" class="absolute inset-0 will-change-transform"></div>
+  
+  <!-- Constellation Canvas -->
+  <canvas id="constellation-canvas" class="fixed inset-0 pointer-events-none z-[1] opacity-70"></canvas>
+</div>
+
+<script>
+  const layers = {
+    far: document.getElementById('stars-far'),
+    mid: document.getElementById('stars-mid'),
+    near: document.getElementById('stars-near'),
+  };
+
+  const gradient = document.getElementById('space-gradient');
+  const canvas = document.getElementById('constellation-canvas') as HTMLCanvasElement;
+  const ctx = canvas ? canvas.getContext('2d') : null;
+
+  if (layers.far && layers.mid && layers.near) {
+    const docHeight = Math.max(document.body.scrollHeight, window.innerHeight);
+    const numStars = Math.max(2000, Math.floor((docHeight / 1000) * 400));
+    
+    // Store exact math representations of the stars for canvas tracking
+    const starData = [];
+
+    // 1. Generate Stars across 3 layers
+    for (let i = 0; i < numStars; i++) {
+      const star = document.createElement('div');
+      
+      const layerRand = Math.random();
+      let targetLayer = layers.far;
+      let size = 1;
+      let layerType = 'far';
+      let speedFactor = 0.65;
+      
+      if (layerRand > 0.8) {
+        targetLayer = layers.near;
+        layerType = 'near';
+        speedFactor = 0.10;
+        size = Math.random() > 0.8 ? 3 : 2;
+      } else if (layerRand > 0.4) {
+        targetLayer = layers.mid;
+        layerType = 'mid';
+        speedFactor = 0.35;
+        size = Math.random() > 0.8 ? 2 : 1;
+      }
+
+      const topPerc = Math.random() * 100;
+      const leftPerc = Math.random() * 100;
+      
+      const isMuted = Math.random() > 0.3;
+      const isGold = Math.random() > 0.95;
+      
+      let colorClass = isMuted ? 'bg-muted-star/30' : 'bg-starlight/40';
+      if (isGold) colorClass = 'bg-solar-gold/40';
+      
+      const duration = (Math.random() * 4 + 4).toFixed(1);
+      const delay = (Math.random() * 4).toFixed(1);
+      
+      star.className = `absolute rounded-full ${colorClass} animate-twinkle`;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.top = `${topPerc}%`;
+      star.style.left = `${leftPerc}%`;
+      star.style.setProperty('--twinkle-duration', `${duration}s`);
+      star.style.animationDelay = `${delay}s`;
+      
+      targetLayer.appendChild(star);
+      
+      // We only care about tracking a subset of stars for constellations to save performance
+      if (layerType === 'near' || (layerType === 'mid' && Math.random() > 0.5)) {
+        starData.push({
+          xPerc: leftPerc,
+          yPerc: topPerc,
+          speed: speedFactor,
+          layer: layerType
+        });
+      }
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    // Canvas sizing
+    const resizeCanvas = () => {
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    };
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    
+    if (!prefersReducedMotion) {
+      // 2. Scroll Parallax & Constellation Logic
+      let currentScroll = window.scrollY;
+      let mouseX = 0;
+      let mouseY = 0;
+      let targetMouseX = 0;
+      let targetMouseY = 0;
+      let realMouseX = -1000; // Screen X
+      let realMouseY = -1000; // Screen Y
+
+      window.addEventListener('mousemove', (e) => {
+        realMouseX = e.clientX;
+        realMouseY = e.clientY;
+        if (window.innerWidth > 768) {
+          targetMouseX = (e.clientX / window.innerWidth - 0.5) * 20;
+          targetMouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+        }
+      });
+      
+      window.addEventListener('mouseleave', () => {
+        realMouseX = -1000;
+        realMouseY = -1000;
+      });
+
+      const animate = () => {
+        mouseX += (targetMouseX - mouseX) * 0.05;
+        mouseY += (targetMouseY - mouseY) * 0.05;
+        currentScroll = window.scrollY;
+
+        // Apply transforms to DOM layers
+        layers.far.style.transform = `translate3d(${mouseX * 0.5}px, ${mouseY * 0.5 + currentScroll * 0.65}px, 0)`; 
+        layers.mid.style.transform = `translate3d(${mouseX * 1}px, ${mouseY * 1 + currentScroll * 0.35}px, 0)`;  
+        layers.near.style.transform = `translate3d(${mouseX * 2}px, ${mouseY * 2 + currentScroll * 0.10}px, 0)`; 
+
+        // Constellation drawing
+        if (ctx && window.innerWidth > 768) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          
+          if (realMouseX >= 0 && realMouseY >= 0) {
+            const docW = document.body.scrollWidth;
+            const docH = document.body.scrollHeight;
+            const connectRadius = 150;
+            
+            ctx.lineWidth = 0.5;
+            
+            // Limit the loop to max 200 checks for performance, or check all if small
+            for (let i = 0; i < starData.length; i++) {
+              const s = starData[i];
+              
+              // Calculate screen position
+              let tx = 0;
+              let ty = 0;
+              
+              if (s.layer === 'near') {
+                tx = mouseX * 2;
+                ty = mouseY * 2 + currentScroll * 0.10;
+              } else if (s.layer === 'mid') {
+                tx = mouseX * 1;
+                ty = mouseY * 1 + currentScroll * 0.35;
+              }
+              
+              // absolute pos - scroll + transform
+              const screenX = (s.xPerc / 100) * docW + tx;
+              const screenY = (s.yPerc / 100) * docH - currentScroll + ty;
+              
+              // Quick bounds check
+              if (screenY > -50 && screenY < canvas.height + 50 && screenX > -50 && screenX < canvas.width + 50) {
+                const dx = screenX - realMouseX;
+                const dy = screenY - realMouseY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                
+                if (dist < connectRadius) {
+                  // Calculate opacity based on distance
+                  const opacity = 1 - (dist / connectRadius);
+                  ctx.beginPath();
+                  ctx.strokeStyle = `rgba(244, 184, 96, ${opacity * 0.4})`; // Solar Gold with dynamic opacity
+                  ctx.moveTo(realMouseX, realMouseY);
+                  ctx.lineTo(screenX, screenY);
+                  ctx.stroke();
+                }
+              }
+            }
+          }
+        }
+
+        requestAnimationFrame(animate);
+      };
+      
+      animate();
+    }
+
+    // 3. Section-Aware Atmosphere
+    if (gradient) {
+      const sections = document.querySelectorAll('section');
+      
+      const sectionThemes = {
+        'hero': 'from-[#111722]/50 via-deep-space',
+        'about': 'from-[#111722]/50 via-deep-space',
+        'constellation': 'from-[#F4B860]/10 via-deep-space', // Golden aura
+        'laboratory': 'from-[#6FA8DC]/10 via-deep-space',   // Blue/Scientific aura
+        'toolkit': 'from-[#111722]/50 via-deep-space',
+        'notes': 'from-[#7E8998]/10 via-deep-space',
+        'currently': 'from-[#111722]/50 via-deep-space',
+        'orbit-section': 'from-[#F4B860]/5 via-deep-space',
+        'contact': 'from-[#111722]/80 via-deep-space'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const themeClass = sectionThemes[id as keyof typeof sectionThemes] || 'from-[#111722]/50 via-deep-space';
+            
+            // Swap the gradient classes
+            gradient.className = `absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] ${themeClass} to-deep-space opacity-80 transition-colors duration-1000 ease-in-out`;
+          }
+        });
+      }, {
+        threshold: 0.3,
+        rootMargin: "-10% 0px -40% 0px"
+      });
+
+      sections.forEach(section => observer.observe(section));
+    }
+  }
+</script>

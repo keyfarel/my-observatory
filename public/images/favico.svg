@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <!-- Thicker lines for visibility at 16x16px -->
+  <g stroke="#9bbadc" stroke-width="36" stroke-linecap="round" opacity="0.9">
+    <!-- Vertical | -->
+    <line x1="120" y1="80" x2="120" y2="320" />
+    <!-- Top diagonal / -->
+    <line x1="120" y1="200" x2="280" y2="80" />
+    <!-- Bottom diagonal \ -->
+    <line x1="120" y1="200" x2="280" y2="320" />
+  </g>
+
+  <defs>
+    <!-- Favicon-optimized Star (thicker and solid) -->
+    <g id="star-node">
+      <polygon points="0,-36 12,0 0,36 -12,0" fill="#f8fafc" />
+      <polygon points="-36,0 0,12 36,0 0,-12" fill="#f8fafc" />
+      <circle cx="0" cy="0" r="10" fill="#ffffff" />
+    </g>
+    
+    <!-- Bigger center node -->
+    <g id="center-node">
+      <!-- Glow -->
+      <polygon points="0,-48 16,0 0,48 -16,0" fill="#93c5fd" opacity="0.5" />
+      <polygon points="-48,0 0,16 48,0 0,-16" fill="#93c5fd" opacity="0.5" />
+      <!-- Solid core -->
+      <polygon points="0,-40 14,0 0,40 -14,0" fill="#ffffff" />
+      <polygon points="-40,0 0,14 40,0 0,-14" fill="#ffffff" />
+      <circle cx="0" cy="0" r="14" fill="#ffffff" />
+    </g>
+  </defs>
+
+  <!-- 4 Corner Stars -->
+  <use href="#star-node" x="120" y="80" />
+  <use href="#star-node" x="120" y="320" />
+  <use href="#star-node" x="280" y="80" />
+  <use href="#star-node" x="280" y="320" />
+
+  <!-- Center Star (Intersection of K) -->
+  <use href="#center-node" x="120" y="200" />
+</svg>

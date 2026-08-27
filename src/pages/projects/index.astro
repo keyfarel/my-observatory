@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/ui/Navbar.astro';
+import Map from '../../components/constellation/Map';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+
+const seo = {
+  title: 'Constellation — Projects | Key Firdausi Al Farel',
+  description: 'Selected software and hardware projects built by Key Firdausi Al Farel, specializing in IoT, Data, and Systems.'
+};
+---
+
+<Layout seo={seo}>
+  <div class="min-h-screen flex flex-col">
+    <Navbar />
+    
+    <main class="flex-grow max-w-6xl mx-auto w-full px-6 py-12">
+      <header class="mb-16">
+        <h1 class="font-display font-light text-4xl text-starlight mb-4">CONSTELLATION</h1>
+        <p class="font-mono text-sm text-muted-star uppercase tracking-widest">Selected Works & Systems</p>
+      </header>
+      
+      {/* Interactive Constellation Map (Desktop) */}
+      <Map client:visible projects={sortedProjects} />
+      
+      {/* Mobile Fallback List / Detailed List */}
+      <div class="mt-16 md:mt-24 space-y-12">
+        <h2 class="font-mono text-xs text-muted-star tracking-[0.2em] uppercase border-b border-muted-star/20 pb-4 mb-8">
+          SELECTED PROJECTS
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {sortedProjects.map((project, index) => (
+            <a href={`/projects/${project.id}`} class="group block border border-muted-star/20 p-6 hover:border-solar-gold/50 transition-colors bg-nebula-surface/30">
+              <div class="font-mono text-xs text-muted-star mb-4">
+                {String(index + 1).padStart(2, '0')}
+              </div>
+              <h3 class="font-display text-2xl text-starlight group-hover:text-solar-gold transition-colors mb-2">
+                {project.data.title}
+              </h3>
+              <p class="font-mono text-xs text-muted-star uppercase">
+                {project.data.domain}
+              </p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>

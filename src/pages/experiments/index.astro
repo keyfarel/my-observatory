@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/ui/Navbar.astro';
+
+// We'll mock some data since we haven't created the MDX files yet
+const experiments = [
+  { idNumber: '014', title: 'ESP32 RELAY CONTROL', domain: 'Hardware / ESP32', slug: 'esp32-relay' },
+  { idNumber: '013', title: 'MQTT COMMUNICATION', domain: 'IoT / Networking', slug: 'mqtt' },
+  { idNumber: '012', title: 'PLC FUNDAMENTALS', domain: 'Industrial Automation', slug: 'plc' },
+  { idNumber: '011', title: 'PHONE HARDWARE', domain: 'Electronics / Repair', slug: 'phone-repair' }
+];
+
+const seo = {
+  title: 'Laboratory — Experiments | Key Firdausi Al Farel',
+  description: 'A collection of active experiments and hardware explorations by Key Firdausi Al Farel.'
+};
+---
+
+<Layout seo={seo}>
+  <div class="min-h-screen flex flex-col">
+    <Navbar />
+    
+    <main class="flex-grow max-w-4xl mx-auto w-full px-6 py-12 md:py-24">
+      <header class="mb-20">
+        <h1 class="font-display font-light text-5xl text-starlight mb-4">LABORATORY</h1>
+        <p class="font-mono text-sm text-muted-star uppercase tracking-widest">Active Experiments & Explorations</p>
+      </header>
+      
+      <div class="space-y-12">
+        {experiments.map(exp => (
+          <div class="group border-b border-muted-star/20 pb-8 hover:border-solar-gold/50 transition-colors">
+            <a href={`/experiments/${exp.slug}`} class="block">
+              <div class="font-mono text-solar-gold text-xs tracking-widest mb-2">
+                EXPERIMENT {exp.idNumber}
+              </div>
+              <h2 class="font-display text-3xl text-starlight group-hover:text-solar-gold transition-colors mb-4 uppercase">
+                {exp.title}
+              </h2>
+              <div class="font-mono text-sm text-muted-star">
+                {exp.domain}
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+    </main>
+  </div>
+</Layout>
