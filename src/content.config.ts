@@ -18,28 +18,6 @@ const projectsCollection = defineCollection({
   }),
 });
 
-const experimentsCollection = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/experiments" }),
-  schema: z.object({
-    title: z.string(),
-    idNumber: z.string(),
-    domain: z.string(),
-    status: z.enum(['ONGOING', 'COMPLETED', 'ARCHIVED']).optional(),
-    date: z.date(),
-  }),
-});
-
-const notesCollection = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/notes" }),
-  schema: z.object({
-    title: z.string(),
-    date: z.date(),
-    description: z.string().optional(),
-  }),
-});
-
 export const collections = {
   'projects': projectsCollection,
-  'experiments': experimentsCollection,
-  'notes': notesCollection,
 };
