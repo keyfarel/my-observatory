@@ -27,8 +27,10 @@
   const ctx = canvas ? canvas.getContext('2d') : null;
 
   if (layers.far && layers.mid && layers.near) {
+    const isMobile = window.innerWidth <= 768;
     const docHeight = Math.max(document.body.scrollHeight, window.innerHeight);
-    const numStars = Math.max(2000, Math.floor((docHeight / 1000) * 400));
+    const maxStars = isMobile ? 300 : 2000;
+    const numStars = Math.min(maxStars, Math.floor((docHeight / 1000) * (isMobile ? 100 : 400)));
     
     // Store exact math representations of the stars for canvas tracking
     const starData = [];
@@ -109,6 +111,10 @@
       let targetMouseY = 0;
       let realMouseX = -1000; // Screen X
       let realMouseY = -1000; // Screen Y
+      
+      let lastScroll = -1;
+      let lastMouseX = -1000;
+      let lastMouseY = -1000;
 
       window.addEventListener('mousemove', (e) => {
         realMouseX = e.clientX;
@@ -128,11 +134,19 @@
         mouseX += (targetMouseX - mouseX) * 0.05;
         mouseY += (targetMouseY - mouseY) * 0.05;
         currentScroll = window.scrollY;
+        
+        const isMobileLive = window.innerWidth <= 768;
 
-        // Apply transforms to DOM layers
-        layers.far.style.transform = `translate3d(${mouseX * 0.5}px, ${mouseY * 0.5 + currentScroll * 0.65}px, 0)`; 
-        layers.mid.style.transform = `translate3d(${mouseX * 1}px, ${mouseY * 1 + currentScroll * 0.35}px, 0)`;  
-        layers.near.style.transform = `translate3d(${mouseX * 2}px, ${mouseY * 2 + currentScroll * 0.10}px, 0)`; 
+        // Apply transforms to DOM layers ONLY if values changed and NOT on mobile (mobile scrolls natively)
+        if (!isMobileLive && (Math.abs(mouseX - lastMouseX) > 0.1 || Math.abs(mouseY - lastMouseY) > 0.1 || currentScroll !== lastScroll)) {
+          layers.far.style.transform = `translate3d(${mouseX * 0.5}px, ${mouseY * 0.5 + currentScroll * 0.65}px, 0)`; 
+          layers.mid.style.transform = `translate3d(${mouseX * 1}px, ${mouseY * 1 + currentScroll * 0.35}px, 0)`;  
+          layers.near.style.transform = `translate3d(${mouseX * 2}px, ${mouseY * 2 + currentScroll * 0.10}px, 0)`; 
+          
+          lastScroll = currentScroll;
+          lastMouseX = mouseX;
+          lastMouseY = mouseY;
+        }
 
         // Constellation drawing
         if (ctx && window.innerWidth > 768) {
