@@ -11,8 +11,9 @@ const getDesktopClass = (isActive: boolean) =>
 ---
 
 <nav class="w-full flex items-center justify-between p-6 lg:p-12 z-50 sticky top-0 bg-deep-space font-mono text-[12.5px] tracking-[0.04em] uppercase border-b border-transparent transition-colors">
-  <a href="/" class="text-starlight hover:text-solar-gold transition-colors text-[13px] font-bold relative z-[60]">
-    [ KF ]
+  <a href="/" class="group flex items-baseline transition-opacity relative z-[60] hover:opacity-80" aria-label="Home">
+    <span class="font-mono text-2xl text-starlight/90 font-bold tracking-tight">K</span>
+    <span class="font-mono text-2xl text-solar-gold font-bold animate-pulse" style="text-shadow: 0 0 12px rgba(244, 184, 96, 0.6); margin-left: 2px;">.</span>
   </a>
   
   <div class="hidden lg:flex gap-8">
