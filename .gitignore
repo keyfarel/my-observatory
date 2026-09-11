@@ -34,3 +34,5 @@ claude.md
 
 AGENTS.md
 *.stackdump
+
+.agents/

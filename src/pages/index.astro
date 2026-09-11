@@ -28,6 +28,9 @@ const experiments = [
   { idNumber: '011', title: 'PHONE HARDWARE', domain: 'Electronics / Repair', status: 'COMPLETED', outcome: 'Screen & battery replacement', evidence: 'PHOTO' }
 ];
 
+const notesData = await getCollection('notes');
+const recentNotes = notesData.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()).slice(0, 3);
+
 const seo = {
   title: 'Key Firdausi Al Farel — Software Engineer',
   description: 'Key Firdausi Al Farel is a software engineer interested in IoT, data, and systems that connect software with the physical world.',
@@ -39,8 +42,8 @@ const seo = {
     "jobTitle": "Software Engineer",
     "url": "https://keyfirdausi.dev",
     "sameAs": [
-      "https://github.com/keyfirdaus",
-      "https://linkedin.com/in/keyfirdaus"
+      "https://github.com/keyfarel",
+      "https://www.linkedin.com/in/key-firdausi-alfarel-566616290/"
     ]
   }
 };
@@ -290,6 +293,48 @@ const seo = {
       </div>
     </section>
 
+    {/* OBSERVATION LOG */}
+    <section id="observation-log" class="py-24 border-t border-muted-star/20 scroll-mt-20">
+      <header class="mb-16 reveal flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <h2 class="font-display font-light text-4xl text-starlight mb-2">OBSERVATION LOG</h2>
+          <p class="font-mono text-xs text-muted-star uppercase tracking-widest">Brain dumps, engineering notes, and unstructured thoughts</p>
+        </div>
+        <a href="/notes" class="inline-flex items-center gap-3 font-mono text-xs tracking-widest text-starlight border border-muted-star/30 px-6 py-3 hover:border-solar-gold/50 hover:text-solar-gold transition-colors group">
+          VIEW ALL LOGS <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </a>
+      </header>
+      
+      <div class="space-y-6">
+        {recentNotes.map((note, i) => (
+          <a href={`/notes/${note.id}`} class="reveal group block bg-deep-space/40 border border-muted-star/20 hover:border-muted-star/40 p-8 md:p-10 transition-all duration-300" style={`transition-delay: ${i * 100}ms`}>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+              <div class="md:col-span-3 font-mono text-xs text-muted-star/70 uppercase tracking-widest pt-1">
+                {new Date(note.data.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
+              </div>
+              <div class="md:col-span-9">
+                <h3 class="font-display text-2xl text-starlight group-hover:text-solar-gold transition-colors mb-4 uppercase tracking-tight">
+                  {note.data.title}
+                </h3>
+                <p class="font-mono text-sm text-muted-star leading-relaxed mb-6">
+                  {note.data.description}
+                </p>
+                {note.data.tags && note.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {note.data.tags.map(tag => (
+                      <span class="font-mono text-[10px] text-muted-star/60 border border-muted-star/20 px-2 py-0.5 uppercase tracking-widest">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
     {/* TOOLKIT */}
     <section id="toolkit" class="py-24 border-t border-muted-star/20 scroll-mt-20">
       <header class="mb-12 reveal">
@@ -387,23 +432,23 @@ const seo = {
         
         <div class="flex flex-col font-mono reveal" style="transition-delay: 100ms">
           {/* Email Row */}
-          <a href="mailto:key.firdausi@example.com" class="group flex flex-col md:flex-row md:items-center justify-between py-8 border-t border-muted-star/20 hover:border-starlight/50 transition-colors">
+          <a href="mailto:keyfarel645@gmail.com" class="group flex flex-col md:flex-row md:items-center justify-between py-8 border-t border-muted-star/20 hover:border-starlight/50 transition-colors">
             <span class="text-[11px] text-muted-star tracking-[0.2em] mb-3 md:mb-0 w-48">EMAIL</span>
-            <span class="text-starlight text-lg md:text-xl lg:text-2xl group-hover:text-solar-gold transition-colors flex-1 tracking-tight">key.firdausi@example.com</span>
+            <span class="text-starlight text-lg md:text-xl lg:text-2xl group-hover:text-solar-gold transition-colors flex-1 tracking-tight">keyfarel645@gmail.com</span>
             <span class="text-muted-star group-hover:text-solar-gold transition-transform duration-300 group-hover:translate-x-2 hidden md:block">→</span>
           </a>
           
           {/* GitHub Row */}
-          <a href="https://github.com/keyfirdaus" target="_blank" class="group flex flex-col md:flex-row md:items-center justify-between py-8 border-t border-muted-star/20 hover:border-starlight/50 transition-colors">
+          <a href="https://github.com/keyfarel" target="_blank" class="group flex flex-col md:flex-row md:items-center justify-between py-8 border-t border-muted-star/20 hover:border-starlight/50 transition-colors">
             <span class="text-[11px] text-muted-star tracking-[0.2em] mb-3 md:mb-0 w-48">GITHUB</span>
-            <span class="text-starlight text-lg md:text-xl lg:text-2xl group-hover:text-solar-gold transition-colors flex-1 tracking-tight">github.com/keyfirdaus</span>
+            <span class="text-starlight text-lg md:text-xl lg:text-2xl group-hover:text-solar-gold transition-colors flex-1 tracking-tight">github.com/keyfarel</span>
             <span class="text-muted-star group-hover:text-solar-gold transition-transform duration-300 group-hover:translate-x-2 hidden md:block">→</span>
           </a>
           
           {/* LinkedIn Row */}
-          <a href="https://linkedin.com/in/keyfirdaus" target="_blank" class="group flex flex-col md:flex-row md:items-center justify-between py-8 border-y border-muted-star/20 hover:border-starlight/50 transition-colors">
+          <a href="https://www.linkedin.com/in/key-firdausi-alfarel-566616290/" target="_blank" class="group flex flex-col md:flex-row md:items-center justify-between py-8 border-y border-muted-star/20 hover:border-starlight/50 transition-colors">
             <span class="text-[11px] text-muted-star tracking-[0.2em] mb-3 md:mb-0 w-48">LINKEDIN</span>
-            <span class="text-starlight text-lg md:text-xl lg:text-2xl group-hover:text-solar-gold transition-colors flex-1 tracking-tight">linkedin.com/in/keyfirdaus</span>
+            <span class="text-starlight text-lg md:text-xl lg:text-2xl group-hover:text-solar-gold transition-colors flex-1 tracking-tight">linkedin.com/in/key-firdausi-alfarel-566616290/</span>
             <span class="text-muted-star group-hover:text-solar-gold transition-transform duration-300 group-hover:translate-x-2 hidden md:block">→</span>
           </a>
         </div>
@@ -433,9 +478,9 @@ const seo = {
           <div class="md:col-span-3 lg:col-span-2 font-mono text-[10px] tracking-widest">
             <div class="text-muted-star/50 mb-6 uppercase">CONNECT</div>
             <div class="flex flex-col gap-4">
-              <a href="https://github.com/keyfirdaus" target="_blank" class="text-starlight hover:text-solar-gold transition-colors">GITHUB</a>
-              <a href="https://linkedin.com/in/keyfirdaus" target="_blank" class="text-starlight hover:text-solar-gold transition-colors">LINKEDIN</a>
-              <a href="mailto:key.firdausi@example.com" class="text-starlight hover:text-solar-gold transition-colors">EMAIL</a>
+              <a href="https://github.com/keyfarel" target="_blank" class="text-starlight hover:text-solar-gold transition-colors">GITHUB</a>
+              <a href="https://www.linkedin.com/in/key-firdausi-alfarel-566616290/" target="_blank" class="text-starlight hover:text-solar-gold transition-colors">LINKEDIN</a>
+              <a href="mailto:keyfarel645@gmail.com" class="text-starlight hover:text-solar-gold transition-colors">EMAIL</a>
             </div>
           </div>
         </div>

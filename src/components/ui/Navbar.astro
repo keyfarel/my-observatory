@@ -1,6 +1,8 @@
 ---
 const pathname = new URL(Astro.request.url).pathname;
 
+const isHome = pathname === '/' || pathname === '/index.html' || pathname === '';
+
 const isWorkActive = pathname.startsWith('/projects') || pathname === '/';
 const isLabActive = pathname.startsWith('/experiments');
 const isAboutActive = pathname.startsWith('/about');
@@ -16,45 +18,55 @@ const getDesktopClass = (isActive: boolean) =>
     <span class="font-mono text-2xl text-solar-gold font-bold animate-pulse" style="text-shadow: 0 0 12px rgba(244, 184, 96, 0.6); margin-left: 2px;">.</span>
   </a>
   
-  <div class="hidden lg:flex gap-8">
-    <a href="/#about" data-section="about" class={getDesktopClass(isAboutActive)}>ABOUT</a>
-    <a href="/#constellation" data-section="constellation" class={getDesktopClass(isWorkActive)}>WORK</a>
-    <a href="/#laboratory" data-section="laboratory" class={getDesktopClass(isLabActive)}>LAB</a>
-    <a href="/#contact" data-section="contact" class={getDesktopClass(isContactActive)}>CONTACT</a>
-  </div>
-  
-  <button id="mobile-menu-toggle" aria-label="Toggle mobile menu" class="relative z-[60] w-8 h-8 flex lg:hidden items-center justify-center focus:outline-none">
-    <span class="line-1 absolute w-6 h-[1px] bg-starlight transition-transform duration-300 -translate-y-2"></span>
-    <span class="line-2 absolute w-6 h-[1px] bg-starlight transition-opacity duration-300"></span>
-    <span class="line-3 absolute w-6 h-[1px] bg-starlight transition-transform duration-300 translate-y-2"></span>
-  </button>
-
-  {/* Dropdown Mobile Menu */}
-  <div id="mobile-menu" class="absolute top-full left-0 w-full bg-deep-space flex flex-col opacity-0 pointer-events-none transition-all duration-300 overflow-hidden border-b border-muted-star/20 shadow-2xl pb-6 z-40">
-    <div class="w-full flex flex-col px-8 pt-6 pb-4">
-      <div class="flex flex-col gap-6 w-full items-center text-center">
-        <a href="/#about" data-section="about" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
-          <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isAboutActive ? 'text-solar-gold' : 'text-starlight'}`}>ABOUT</span>
-          <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isAboutActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
-        </a>
-
-        <a href="/#constellation" data-section="constellation" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
-          <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isWorkActive ? 'text-solar-gold' : 'text-starlight'}`}>WORK</span>
-          <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isWorkActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
-        </a>
-        
-        <a href="/#laboratory" data-section="laboratory" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
-          <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isLabActive ? 'text-solar-gold' : 'text-starlight'}`}>LAB</span>
-          <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isLabActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
-        </a>
-
-        <a href="/#contact" data-section="contact" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
-          <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isContactActive ? 'text-solar-gold' : 'text-starlight'}`}>CONTACT</span>
-          <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isContactActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
-        </a>
+  {isHome && (
+    <>
+      <div class="hidden lg:flex gap-8">
+        <a href="/#about" data-section="about" class={getDesktopClass(isAboutActive)}>ABOUT</a>
+        <a href="/#constellation" data-section="constellation" class={getDesktopClass(isWorkActive)}>WORK</a>
+        <a href="/#laboratory" data-section="laboratory" class={getDesktopClass(isLabActive)}>LAB</a>
+        <a href="/#observation-log" data-section="observation-log" class={getDesktopClass(pathname.startsWith('/notes'))}>LOGS</a>
+        <a href="/#contact" data-section="contact" class={getDesktopClass(isContactActive)}>CONTACT</a>
       </div>
-    </div>
-  </div>
+      
+      <button id="mobile-menu-toggle" aria-label="Toggle mobile menu" class="relative z-[60] w-8 h-8 flex lg:hidden items-center justify-center focus:outline-none">
+        <span class="line-1 absolute w-6 h-[1px] bg-starlight transition-transform duration-300 -translate-y-2"></span>
+        <span class="line-2 absolute w-6 h-[1px] bg-starlight transition-opacity duration-300"></span>
+        <span class="line-3 absolute w-6 h-[1px] bg-starlight transition-transform duration-300 translate-y-2"></span>
+      </button>
+
+      {/* Dropdown Mobile Menu */}
+      <div id="mobile-menu" class="absolute top-full left-0 w-full bg-deep-space flex flex-col opacity-0 pointer-events-none transition-all duration-300 overflow-hidden border-b border-muted-star/20 shadow-2xl pb-6 z-40">
+        <div class="w-full flex flex-col px-8 pt-6 pb-4">
+          <div class="flex flex-col gap-6 w-full items-center text-center">
+            <a href="/#about" data-section="about" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
+              <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isAboutActive ? 'text-solar-gold' : 'text-starlight'}`}>ABOUT</span>
+              <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isAboutActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
+            </a>
+
+            <a href="/#constellation" data-section="constellation" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
+              <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isWorkActive ? 'text-solar-gold' : 'text-starlight'}`}>WORK</span>
+              <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isWorkActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
+            </a>
+            
+            <a href="/#laboratory" data-section="laboratory" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
+              <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isLabActive ? 'text-solar-gold' : 'text-starlight'}`}>LAB</span>
+              <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isLabActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
+            </a>
+
+            <a href="/#observation-log" data-section="observation-log" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
+              <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${pathname.startsWith('/notes') ? 'text-solar-gold' : 'text-starlight'}`}>LOGS</span>
+              <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${pathname.startsWith('/notes') ? 'scale-x-100' : 'scale-x-0'}`}></span>
+            </a>
+
+            <a href="/#contact" data-section="contact" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
+              <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isContactActive ? 'text-solar-gold' : 'text-starlight'}`}>CONTACT</span>
+              <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isContactActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </>
+  )}
 </nav>
 
 <style>
