@@ -43,12 +43,14 @@ const orbitData: OrbitData[] = [
   },
   {
     id: "2026",
-    year: "2026",
+    year: "2026 / NOW",
     title: "THE INTEGRATION",
-    subtitle: "IoT & PT INKA Internship",
-    description: "A very busy year! I am currently working as a Web Development Intern at PT INKA (Persero) and participating in Samsung Innovation Campus Batch 8. My core focus right now is a mix of modern web development using Next.js and building physical IoT systems.",
-    focusTitle: "CURRENT FOCUS",
+    subtitle: "Industry, IoT & Personal Observatory",
+    description: "A highly productive phase. I am interning as a Web Developer at PT INKA (Persero) and participating in SIC Batch 8. Alongside Next.js and IoT development, I'm building this Observatory and actively seeking Software Engineering / IoT roles.",
+    focusTitle: "TECH STACK",
     focusItems: ["Next.js", "Laravel", "IoT Systems", "Web Dev"],
+    workTitle: "BUILDING & SEEKING",
+    workItems: ["Personal Observatory", "Cloud Systems", "SE / IoT Roles"],
   }
 ];
 
