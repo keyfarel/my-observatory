@@ -1,0 +1,154 @@
+---
+title: "Jawara Management System"
+description: "A comprehensive community management app integrating Flutter, Laravel, and a Biometric facial recognition system."
+status: "COMPLETED"
+domain: "Mobile & AI"
+date: 2025-12-01
+github: "https://github.com/keyfarel/jawara_clone_kel-6"
+tech: "Flutter · Laravel · Python · ngrok"
+---
+
+## Overview
+
+The Jawara Management System is a comprehensive mobile application designed to digitize and streamline community administration. Developed for the JAWARA program by Group 6, this system provides administrators with powerful tools to manage everything from resident demographics to financial transparency and activity broadcasting.
+
+<div className="my-14 flex justify-center">
+  <div className="relative mx-auto bg-black border-8 border-zinc-800 shadow-2xl overflow-hidden" style={{ width: '280px', height: '580px', borderRadius: '3rem' }}>
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-zinc-800 rounded-b-2xl z-10"></div>
+    <div className="w-full h-full bg-black flex flex-col justify-center">
+      <img src="/images/projects/jawara-pintar/dashboard.webp" alt="Jawara Mobile Dashboard" className="w-full h-auto object-cover m-0" />
+    </div>
+  </div>
+</div>
+
+## My Role & Leadership
+
+As the Team Lead for this project, my responsibilities extended far beyond writing code. I was responsible for:
+- **Project Management:** Breaking down complex features into manageable tasks and coordinating the development workflow across the team.
+- **Technical Architecture:** Designing the system's foundation and ensuring the team adhered to strict architectural standards.
+- **Systems Integration:** Acting as the bridge between the different technology stacks, ensuring the Flutter frontend, Laravel backend, and Python machine learning services communicated seamlessly.
+
+## Core Features
+
+We built the system to handle the high data complexity of a real-world community:
+- **Financial Tracking:** Automated recording of incomes, community dues, and expenses, complete with comprehensive reporting.
+- **Demographic Management:** A multi-layered data structure tracking physical houses, family units, and individual citizen records.
+- **Biometric Security:** An advanced e-KYC feature allowing users to verify their identity by matching a live selfie against their ID card (KTP).
+- **Community Broadcasting:** A centralized hub for administrators to blast announcements and collect aspirations from residents.
+
+## The Architecture & "The Bridge"
+
+The most technically challenging—and interesting—aspect of this project was our architecture. We needed to integrate a deep learning model for biometric verification without the budget for a dedicated GPU cloud server. 
+
+Our stack consisted of:
+- **Frontend:** Flutter (Mobile UI)
+- **Backend:** Laravel (Business Logic & Database)
+- **AI Engine:** Python (DeepFace) running locally in a Jupyter Notebook
+
+To connect the Laravel backend to our local Python machine learning environment, we built a creative tunneling solution using **FastAPI** and **ngrok**. 
+
+Here is the core script we used to establish the persistent bridge directly from the Jupyter Notebook:
+
+```python
+import nest_asyncio
+import uvicorn
+from pyngrok import ngrok, conf
+import os
+
+# Allow async loops within the Jupyter environment
+nest_asyncio.apply()
+
+PORT = 5000
+STATIC_DOMAIN = "caliphal-dallas-wriggly.ngrok-free.dev"
+
+# Clean up any lingering processes
+ngrok.kill()
+os.system(f"fuser -k {PORT}/tcp")
+
+# Establish a secure tunnel using a static domain
+conf.get_default().auth_token = os.environ.get("NGROK_TOKEN")
+public_url = ngrok.connect(PORT, domain=STATIC_DOMAIN)
+print(f"API Tunnel established at: {public_url.public_url.replace('http://', 'https://')}")
+
+# Serve the FastAPI application
+config = uvicorn.Config("main:app", host="0.0.0.0", port=PORT, log_level="info")
+server = uvicorn.Server(config)
+await server.serve()
+```
+
+Once the tunnel was open, we exposed the following FastAPI endpoints to handle the heavy lifting of biometric verification and login using the **DeepFace** library:
+
+```python
+from fastapi import FastAPI, File, UploadFile
+from deepface import DeepFace
+
+app = FastAPI()
+
+@app.post("/verify")
+async def verify_face(ktp: UploadFile = File(...), selfie: UploadFile = File(...)):
+    # e-KYC: Match uploaded ID Card photo against live selfie
+    try:
+        result = DeepFace.verify(
+            img1_path=ktp.filename, 
+            img2_path=selfie.filename,
+            model_name="VGG-Face", 
+            detector_backend="opencv", 
+            enforce_detection=False
+        )
+        return {"status": "success", "verified": result['verified'], "similarity": result['distance']}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.post("/find-face")
+async def find_face(selfie: UploadFile = File(...)):
+    # Biometric Login: Search selfie against known faces database
+    try:
+        dfs = DeepFace.find(
+            img_path=selfie.filename, 
+            db_path="known_faces",
+            model_name="VGG-Face", 
+            silent=True
+        )
+        if len(dfs) > 0 and not dfs[0].empty:
+            match = dfs[0].iloc[0]['identity']
+            return {"status": "found", "match_filename": match}
+        return {"status": "not_found"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+```
+
+## Database Design
+
+To support these features, the Laravel backend implements a robust relational database, logically divided into three domains. The entire API ecosystem is fully documented interactively.
+
+<div className="my-10 rounded-xl overflow-hidden shadow-xl ring-1 ring-white/10 bg-white/5">
+  <img src="/images/projects/jawara-pintar/swagger-api.webp" alt="Jawara Swagger API" className="w-full object-cover m-0" />
+</div>
+
+### 1. Identity & Access
+| Table | Description |
+| :--- | :--- |
+| **Users** | Core authentication, access roles, and registration states |
+| **Citizens** | Detailed demographic records and biometric verification data |
+
+### 2. Resident Management
+| Table | Description |
+| :--- | :--- |
+| **Houses** | Physical addresses mapped to specific family units |
+| **Families** | Household groupings and property ownership status |
+| **Mutations** | Historical tracking of resident relocations |
+
+### 3. Finance & Operations
+| Table | Description |
+| :--- | :--- |
+| **Billings** | Generated community dues and payment tracking |
+| **Transactions** | Financial ledger for all incomes and expenses |
+| **Activities** | Management of community events and personnel |
+
+
+## Links & Resources
+
+*   **Mobile App Repository:** [jawara_clone_kel-6](https://github.com/keyfarel/jawara_clone_kel-6)
+*   **Backend API Repository:** [jawara_api](https://github.com/keyfarel/jawara_api)
+*   **Machine Learning Model:** [Python Notebook](https://drive.google.com/file/d/1HUPPdQMXwf-0AEjmuQoz-pNeiyvXBDlU/view?usp=sharing)
+*   **API Documentation:** Built with Swagger (hosted dynamically via ngrok).
