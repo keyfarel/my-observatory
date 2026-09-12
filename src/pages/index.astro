@@ -58,22 +58,22 @@ const seo = {
   <div class="relative z-10 w-full max-w-7xl mx-auto px-6">
     
     {/* HERO SECTION */}
-    <section class="min-h-[100svh] flex flex-col justify-center pt-[100px] pb-24" id="hero">
+    <section class="min-h-[100svh] flex flex-col justify-center pt-8 pb-32" id="hero">
       <div class="grid grid-cols-1 xl:grid-cols-12 gap-16 xl:gap-8 items-center w-full">
         
         {/* Left Column: Human / Identity */}
-        <div class="xl:col-span-7 flex flex-col justify-center">
+        <div class="xl:col-span-6 flex flex-col justify-center">
           <div class="font-mono text-[10px] md:text-xs tracking-[0.2em] mb-12 xl:mb-[72px]">
             <div class="text-starlight mb-4 uppercase reveal" style="transition-delay: 100ms">Key Firdausi Al Farel</div>
             <div class="text-solar-gold uppercase reveal" style="transition-delay: 180ms">Software Engineer</div>
             <div class="text-muted-star reveal" style="transition-delay: 240ms">IoT · Data · Systems</div>
           </div>
           
-          <h1 class="font-display font-normal text-[clamp(3.5rem,5vw,5rem)] leading-[0.95] tracking-[-0.045em] text-starlight mb-[44px] reveal" style="transition-delay: 300ms">
+          <h1 class="font-display font-normal text-[clamp(2.75rem,4vw,4.25rem)] leading-[0.95] tracking-[-0.045em] text-starlight mb-8 reveal" style="transition-delay: 300ms">
             PERSONAL<br />OBSERVATORY
           </h1>
           
-          <p class="font-display text-[clamp(1rem,1.2vw,1.25rem)] text-muted-star max-w-lg uppercase tracking-[0.02em] leading-[1.7] mb-[52px] reveal" style="transition-delay: 450ms">
+          <p class="font-display text-[clamp(1rem,1.2vw,1.25rem)] text-muted-star max-w-lg uppercase tracking-[0.02em] leading-[1.7] mb-[40px] reveal" style="transition-delay: 450ms">
             I build systems<br class="hidden md:block"/> between software<br class="hidden md:block"/> and the physical world.
           </p>
           
@@ -87,74 +87,17 @@ const seo = {
         </div>
 
         {/* Right Column: System / Observatory */}
-        <div class="xl:col-span-5 hidden md:flex flex-col justify-center items-end xl:items-center reveal" style="transition-delay: 800ms">
+        <div class="xl:col-span-6 hidden md:flex flex-col justify-center items-center xl:items-start xl:pl-12 reveal" style="transition-delay: 800ms">
           
-          <div class="w-full max-w-[420px] border border-muted-star/20 bg-deep-space/40 backdrop-blur-sm rounded-sm p-8 xl:p-10 font-mono text-[11px] tracking-widest text-muted-star relative overflow-hidden">
-            {/* Subtle Grid Background */}
-            <div class="absolute inset-0 bg-[linear-gradient(rgba(126,137,152,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(126,137,152,0.05)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none"></div>
+          <div class="w-full max-w-[500px] relative group overflow-hidden rounded-sm bg-deep-space/40 shadow-2xl transition-all duration-700 hover:shadow-[0_0_40px_rgba(244,184,96,0.15)] -translate-y-8 xl:-translate-y-12">
             
-            <div class="relative z-10">
-              {/* Header */}
-              <div class="flex justify-between items-center mb-8 pb-5 border-b border-muted-star/20 text-xs">
-                <span class="text-starlight">SYSTEM 001</span>
-                <span class="text-solar-gold animate-pulse">● LIVE</span>
-              </div>
-
-            {/* Architecture Node Diagram */}
-            <div class="mb-10 flex flex-col items-center">
-              <div class="w-1.5 h-1.5 rounded-full bg-starlight mb-2"></div>
-              <div class="w-[80%] h-px bg-muted-star/30 flex justify-between items-center relative">
-                <div class="absolute inset-x-0 top-0 h-4 flex justify-between px-2">
-                  <div class="w-px h-full bg-muted-star/30"></div>
-                  <div class="w-px h-full bg-muted-star/30"></div>
-                  <div class="w-px h-full bg-muted-star/30"></div>
-                </div>
-              </div>
-              <div class="w-[80%] flex justify-between items-center px-2 mt-4 text-[9px] text-muted-star/70">
-                <span>IoT</span>
-                <span>DATA</span>
-                <span>SOFT</span>
-              </div>
-            </div>
-
-            {/* Diagnostics */}
-            <div class="space-y-4 mb-8">
-              <div class="flex justify-between">
-                <span>SYSTEM STATUS</span>
-                <span class="text-starlight">SYNCED</span>
-              </div>
-              <div class="flex justify-between">
-                <span>DATA PIPELINE</span>
-                <span class="text-starlight">ACTIVE</span>
-              </div>
-              <div class="flex justify-between">
-                <span>HARDWARE NODE</span>
-                <span class="text-muted-star/70">POLLING</span>
-              </div>
-            </div>
-
-            {/* Footer Metrics */}
-            <div class="pt-6 border-t border-muted-star/20">
-              <div class="flex gap-12">
-                <div class="flex flex-col gap-1">
-                  <span class="text-muted-star/50">PROJECTS</span>
-                  <span class="text-starlight">{projects.length < 10 ? `0${projects.length}` : projects.length}</span>
-                </div>
-                <div class="flex flex-col gap-1">
-                  <span class="text-muted-star/50">SYSTEMS</span>
-                  <span class="text-starlight">04</span>
-                </div>
-              </div>
-            </div>
+            <img 
+              src="/images/global/hero-photo.webp" 
+              alt="Key Firdausi Al Farel Workspace" 
+              class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.03] opacity-100 brightness-110 contrast-105"
+            />
           </div>
-        </div>
 
-        {/* Vertical Index Indicator */}
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 hidden 2xl:flex flex-col items-center gap-4 text-muted-star/30 font-mono text-[10px] tracking-[0.3em]" style="writing-mode: vertical-rl">
-          <span class="text-solar-gold/70">01 / 04</span>
-          <div class="w-px h-12 bg-muted-star/20"></div>
-          <span>INTRODUCTION</span>
-        </div>
 
       </div>
       </div>
@@ -162,9 +105,24 @@ const seo = {
 
     {/* THE OBSERVER */}
     <section id="about" class="py-24 border-t border-muted-star/20 scroll-mt-20">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8">
-        <div class="lg:col-span-8">
-          <header class="mb-12 reveal">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 items-center">
+        
+        {/* Left Column: Portrait */}
+        <div class="lg:col-span-5 reveal hidden md:block">
+          <div class="w-full aspect-[3/4] relative group overflow-hidden rounded-sm bg-deep-space/40 shadow-2xl transition-all duration-700 hover:shadow-[0_0_40px_rgba(244,184,96,0.15)]">
+            <div class="absolute inset-0 bg-gradient-to-tr from-deep-space/40 via-transparent to-transparent z-10 pointer-events-none"></div>
+            {/* Profile Image */}
+            <img 
+              src="/images/global/profile-photo.webp" 
+              alt="Key Firdausi Al Farel Portrait" 
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03] opacity-100"
+            />
+          </div>
+        </div>
+
+        {/* Right Column: Text */}
+        <div class="lg:col-span-7">
+          <header class="mb-10 reveal">
             <h2 class="font-display font-light text-4xl text-starlight mb-2 uppercase">THE OBSERVER</h2>
             <p class="font-mono text-xs text-muted-star uppercase tracking-widest mt-2">Who I am</p>
           </header>
@@ -188,6 +146,7 @@ const seo = {
             </div>
           </div>
         </div>
+        
       </div>
     </section>
 
@@ -427,7 +386,7 @@ const seo = {
       </div>
       
       <footer class="pt-16 pb-8 reveal">
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-12 mb-32">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-12">
           <div class="md:col-span-6 lg:col-span-8">
             <div class="flex items-baseline mb-6">
               <span class="font-mono text-xl text-starlight/90 font-bold tracking-tight">K</span>
