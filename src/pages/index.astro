@@ -32,7 +32,7 @@ const notesData = await getCollection('notes');
 const recentNotes = notesData.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()).slice(0, 3);
 
 const seo = {
-  title: 'Key Firdausi Al Farel — Software Engineer',
+  title: 'Key Firdausi Al Farel | Software Engineer',
   description: 'Key Firdausi Al Farel is a software engineer interested in IoT, data, and systems that connect software with the physical world.',
   ogImage: '/images/og-image.png',
   jsonLd: {
@@ -251,47 +251,49 @@ const seo = {
       )}
     </section>
 
-    {/* LABORATORY */}
-    <section id="laboratory" class="py-24 border-t border-muted-star/20 scroll-mt-20">
-      <header class="mb-16 reveal">
-        <h2 class="font-display font-light text-4xl text-starlight mb-2">LABORATORY</h2>
-        <p class="font-mono text-xs text-muted-star uppercase tracking-widest">Active Experiments & Explorations</p>
-      </header>
-      
-      <div class="space-y-12">
-        {experiments.map((exp, i) => (
-          <a href={`/experiments/${exp.idNumber}`} class={`reveal group block border border-transparent border-b-muted-star/10 p-6 -mx-6 hover:bg-nebula-surface/10 hover:border-muted-star/20 transition-all duration-300`} style={`transition-delay: ${i * 100}ms`}>
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 items-start">
-              <div class="md:col-span-8">
-                <div class="font-mono text-solar-gold text-xs tracking-widest mb-2 flex items-center gap-2 transition-transform duration-300 group-hover:translate-x-1">
-                  EXPERIMENT {exp.idNumber} <span class="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                </div>
-                <h3 class="font-display text-2xl text-starlight group-hover:text-solar-gold transition-colors mb-2 uppercase tracking-tight">
-                  {exp.title}
-                </h3>
-                <div class="font-mono text-sm text-muted-star mb-3">
-                  {exp.domain}
-                </div>
-              </div>
-              <div class="md:col-span-4 font-mono text-xs flex flex-col md:items-end gap-2 text-left md:text-right mt-2 md:mt-0">
-                <div class="flex flex-wrap gap-2 md:justify-end">
-                  <div class={`inline-flex items-center gap-1.5 px-2 py-1 bg-deep-space border ${exp.status === 'COMPLETED' ? 'border-starlight/20 text-starlight' : exp.status === 'ONGOING' ? 'border-solar-gold/20 text-solar-gold' : 'border-muted-star/20 text-muted-star'} uppercase tracking-widest`}>
-                    {exp.status === 'ONGOING' && <span class="w-1 h-1 rounded-full bg-solar-gold animate-pulse"></span>}
-                    {exp.status}
+    {/* LABORATORY (Temporarily hidden) */}
+    {false && (
+      <section id="laboratory" class="py-24 border-t border-muted-star/20 scroll-mt-20">
+        <header class="mb-16 reveal">
+          <h2 class="font-display font-light text-4xl text-starlight mb-2">LABORATORY</h2>
+          <p class="font-mono text-xs text-muted-star uppercase tracking-widest">Active Experiments & Explorations</p>
+        </header>
+        
+        <div class="space-y-12">
+          {experiments.map((exp, i) => (
+            <a href={`/experiments/${exp.idNumber}`} class={`reveal group block border border-transparent border-b-muted-star/10 p-6 -mx-6 hover:bg-nebula-surface/10 hover:border-muted-star/20 transition-all duration-300`} style={`transition-delay: ${i * 100}ms`}>
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 items-start">
+                <div class="md:col-span-8">
+                  <div class="font-mono text-solar-gold text-xs tracking-widest mb-2 flex items-center gap-2 transition-transform duration-300 group-hover:translate-x-1">
+                    EXPERIMENT {exp.idNumber} <span class="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                  </div>
+                  <h3 class="font-display text-2xl text-starlight group-hover:text-solar-gold transition-colors mb-2 uppercase tracking-tight">
+                    {exp.title}
+                  </h3>
+                  <div class="font-mono text-sm text-muted-star mb-3">
+                    {exp.domain}
                   </div>
                 </div>
-                <div class="text-starlight/80 text-[11px] uppercase tracking-wide leading-relaxed">
-                  {exp.outcome}
-                </div>
-                <div class="text-muted-star/50 text-[9px] uppercase tracking-[0.2em] mt-1">
-                  {exp.evidence}
+                <div class="md:col-span-4 font-mono text-xs flex flex-col md:items-end gap-2 text-left md:text-right mt-2 md:mt-0">
+                  <div class="flex flex-wrap gap-2 md:justify-end">
+                    <div class={`inline-flex items-center gap-1.5 px-2 py-1 bg-deep-space border ${exp.status === 'COMPLETED' ? 'border-starlight/20 text-starlight' : exp.status === 'ONGOING' ? 'border-solar-gold/20 text-solar-gold' : 'border-muted-star/20 text-muted-star'} uppercase tracking-widest`}>
+                      {exp.status === 'ONGOING' && <span class="w-1 h-1 rounded-full bg-solar-gold animate-pulse"></span>}
+                      {exp.status}
+                    </div>
+                  </div>
+                  <div class="text-starlight/80 text-[11px] uppercase tracking-wide leading-relaxed">
+                    {exp.outcome}
+                  </div>
+                  <div class="text-muted-star/50 text-[9px] uppercase tracking-[0.2em] mt-1">
+                    {exp.evidence}
+                  </div>
                 </div>
               </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </section>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
 
     {/* OBSERVATION LOG */}
     <section id="observation-log" class="py-24 border-t border-muted-star/20 scroll-mt-20">
@@ -300,9 +302,11 @@ const seo = {
           <h2 class="font-display font-light text-4xl text-starlight mb-2">OBSERVATION LOG</h2>
           <p class="font-mono text-xs text-muted-star uppercase tracking-widest">Brain dumps, engineering notes, and unstructured thoughts</p>
         </div>
-        <a href="/notes" class="inline-flex items-center gap-3 font-mono text-xs tracking-widest text-starlight border border-muted-star/30 px-6 py-3 hover:border-solar-gold/50 hover:text-solar-gold transition-colors group">
-          VIEW ALL LOGS <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
-        </a>
+        {notesData.length > 3 && (
+          <a href="/notes" class="inline-flex items-center gap-3 font-mono text-xs tracking-widest text-starlight border border-muted-star/30 px-6 py-3 hover:border-solar-gold/50 hover:text-solar-gold transition-colors group">
+            VIEW ALL LOGS <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </a>
+        )}
       </header>
       
       <div class="space-y-6">
@@ -437,7 +441,7 @@ const seo = {
             <div class="text-muted-star/50 mb-6 uppercase">EXPLORE</div>
             <div class="flex flex-col gap-4">
               <a href="#constellation" class="text-starlight hover:text-solar-gold transition-colors">WORK</a>
-              <a href="#laboratory" class="text-starlight hover:text-solar-gold transition-colors">LAB</a>
+              {false && <a href="#laboratory" class="text-starlight hover:text-solar-gold transition-colors">LAB</a>}
               <a href="#notes" class="text-starlight hover:text-solar-gold transition-colors">NOTES</a>
               <a href="#about" class="text-starlight hover:text-solar-gold transition-colors">ABOUT</a>
             </div>

@@ -23,7 +23,7 @@ const getDesktopClass = (isActive: boolean) =>
       <div class="hidden lg:flex gap-8">
         <a href="/#about" data-section="about" class={getDesktopClass(isAboutActive)}>ABOUT</a>
         <a href="/#constellation" data-section="constellation" class={getDesktopClass(isWorkActive)}>WORK</a>
-        <a href="/#laboratory" data-section="laboratory" class={getDesktopClass(isLabActive)}>LAB</a>
+        {false && <a href="/#laboratory" data-section="laboratory" class={getDesktopClass(isLabActive)}>LAB</a>}
         <a href="/#observation-log" data-section="observation-log" class={getDesktopClass(pathname.startsWith('/notes'))}>LOGS</a>
         <a href="/#contact" data-section="contact" class={getDesktopClass(isContactActive)}>CONTACT</a>
       </div>
@@ -48,10 +48,12 @@ const getDesktopClass = (isActive: boolean) =>
               <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isWorkActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
             </a>
             
-            <a href="/#laboratory" data-section="laboratory" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
-              <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isLabActive ? 'text-solar-gold' : 'text-starlight'}`}>LAB</span>
-              <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isLabActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
-            </a>
+            {false && (
+              <a href="/#laboratory" data-section="laboratory" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
+                <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${isLabActive ? 'text-solar-gold' : 'text-starlight'}`}>LAB</span>
+                <span class={`absolute -bottom-2 left-0 w-full h-[1px] bg-solar-gold origin-center transition-transform duration-300 group-active:scale-x-100 ${isLabActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
+              </a>
+            )}
 
             <a href="/#observation-log" data-section="observation-log" class="mobile-link nav-item opacity-0 transition-opacity duration-300 group flex flex-col relative w-fit outline-none">
               <span class={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 group-active:text-solar-gold ${pathname.startsWith('/notes') ? 'text-solar-gold' : 'text-starlight'}`}>LOGS</span>

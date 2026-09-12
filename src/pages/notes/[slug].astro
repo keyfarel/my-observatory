@@ -6,17 +6,22 @@ import Starfield from '../../components/ui/Starfield.astro';
 
 export async function getStaticPaths() {
   const notes = await getCollection('notes');
-  return notes.map(entry => ({
-    params: { slug: entry.id },
-    props: { entry },
-  }));
+  const sortedNotes = notes.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
+  return sortedNotes.map((entry, index) => {
+    const prevNote = index < sortedNotes.length - 1 ? sortedNotes[index + 1] : null;
+    const nextNote = index > 0 ? sortedNotes[index - 1] : null;
+    return {
+      params: { slug: entry.id },
+      props: { entry, prevNote, nextNote },
+    };
+  });
 }
 
-const { entry } = Astro.props;
+const { entry, prevNote, nextNote } = Astro.props;
 const { Content } = await render(entry);
 
 const seo = {
-  title: entry.data.title + ' — Observation Log',
+  title: entry.data.title + ' | Observation Log',
   description: entry.data.description,
 };
 ---
@@ -26,8 +31,8 @@ const seo = {
   <Navbar />
   
   <main class="max-w-4xl mx-auto px-6 lg:px-12 pt-32 pb-48 relative z-10">
-    <a href="/notes" class="inline-flex items-center group font-mono text-xs text-muted-star hover:text-solar-gold transition-colors tracking-widest uppercase mb-12 md:mb-16 animate-project-fade-up" style="animation-delay: 0ms">
-      <span class="inline-block transition-transform duration-300 group-hover:-translate-x-1.5 mr-2">←</span> OBSERVATION LOG
+    <a href="/#observation-log" class="inline-flex items-center group font-mono text-xs text-muted-star hover:text-solar-gold transition-colors tracking-widest uppercase mb-12 md:mb-16 animate-project-fade-up" style="animation-delay: 0ms">
+      <span class="inline-block transition-transform duration-300 group-hover:-translate-x-1.5 mr-2">←</span> HOME
     </a>
 
     <article>
@@ -54,6 +59,23 @@ const seo = {
       <div id="note-content" class="prose prose-invert prose-p:font-sans prose-p:text-muted-star prose-p:leading-relaxed prose-headings:font-display prose-headings:text-starlight prose-headings:font-light prose-h2:text-2xl prose-h2:mt-16 prose-h2:mb-6 prose-h2:uppercase prose-h2:tracking-wide prose-a:text-solar-gold prose-a:no-underline hover:prose-a:underline prose-pre:bg-nebula-surface prose-pre:border prose-pre:border-muted-star/30 prose-code:font-mono prose-code:text-sm prose-li:text-muted-star max-w-none animate-image-reveal" style="animation-delay: 300ms">
         <Content />
       </div>
+
+      {(prevNote || nextNote) && (
+        <div class="mt-24 border-t border-muted-star/20 pt-12 flex justify-between items-center w-full animate-project-fade-up" style="animation-delay: 400ms">
+          {prevNote ? (
+            <a href={`/notes/${prevNote.id}`} class="group flex flex-col items-start font-mono text-sm tracking-widest text-muted-star hover:text-solar-gold transition-colors text-left uppercase">
+              <span class="mb-1"><span class="inline-block transition-transform duration-300 group-hover:-translate-x-1.5 text-solar-gold mr-1">←</span> PREV LOG</span>
+              <span class="text-[10px] opacity-50 truncate max-w-[150px] md:max-w-[300px]">{prevNote.data.title}</span>
+            </a>
+          ) : <div></div>}
+          {nextNote ? (
+            <a href={`/notes/${nextNote.id}`} class="group flex flex-col items-end font-mono text-sm tracking-widest text-muted-star hover:text-solar-gold transition-colors text-right uppercase">
+              <span class="mb-1">NEXT LOG <span class="inline-block transition-transform duration-300 group-hover:translate-x-1.5 text-solar-gold ml-1">→</span></span>
+              <span class="text-[10px] opacity-50 truncate max-w-[150px] md:max-w-[300px]">{nextNote.data.title}</span>
+            </a>
+          ) : <div></div>}
+        </div>
+      )}
     </article>
   </main>
 </Layout>
