@@ -98,12 +98,10 @@ const seo = {
         </div>
 
         {entry.data.tech && (
-          <div class="mt-24 tech-stack-section">
-            <h2 class="font-display font-light text-2xl text-starlight mb-8 uppercase tracking-wide">TECH STACK</h2>
-            <div class="font-mono text-sm text-muted-star tracking-widest leading-loose flex flex-col gap-2">
-              {entry.data.tech.split('·').map((t, i) => (
-                <div class="tech-item" style={`transition-delay: ${i * 80}ms`}>{t.trim()}</div>
-              ))}
+          <div class="mt-24 pt-12 border-t border-white/10">
+            <h3 class="font-mono text-xs text-muted-star tracking-widest uppercase mb-6">Tech Stack</h3>
+            <div class="font-mono text-sm uppercase text-solar-gold/80">
+              {entry.data.tech}
             </div>
           </div>
         )}

@@ -7,7 +7,7 @@ date: 2026-08-27
 order: 5
 heroImage: "/images/projects/magic-chess-dataset/hero-data.webp"
 demo: "https://www.kaggle.com/datasets/keyfirdausialfarel/magic-chess-go-go-mcgg-advanced-server-stats/data"
-tech: "Python · NLP · OCR · Pandas · Data Engineering"
+tech: "Python | NLP | OCR | Pandas | Data Engineering"
 ---
 
 ## The Challenge

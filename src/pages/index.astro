@@ -168,7 +168,7 @@ const seo = {
             
             <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               <div class="md:col-span-8">
-                <div class="font-mono text-solar-gold text-xs tracking-widest mb-4 flex items-center gap-3 uppercase">
+                <div class="font-mono text-solar-gold text-xs tracking-widest mb-4 flex flex-wrap items-center gap-3 uppercase">
                   <span class="w-1.5 h-1.5 rounded-full bg-solar-gold animate-pulse"></span>
                   FEATURED SYSTEM
                   {projects[0].data.date && (
@@ -187,15 +187,8 @@ const seo = {
                   {projects[0].data.description}
                 </p>
                 
-                <div class="flex flex-wrap gap-3 font-mono text-xs text-muted-star/70 uppercase">
-                  {projects[0].data.tech ? projects[0].data.tech.split('·').slice(0, 3).map((t) => (
-                    <span class="px-3 py-1 border border-muted-star/20 rounded-sm">{t.trim()}</span>
-                  )) : (
-                    <>
-                      <span class="px-3 py-1 border border-muted-star/20 rounded-sm">IoT</span>
-                      <span class="px-3 py-1 border border-muted-star/20 rounded-sm">Data Pipeline</span>
-                    </>
-                  )}
+                <div class="font-mono text-xs text-muted-star/70 uppercase">
+                  {projects[0].data.tech || "IoT | Data Pipeline"}
                 </div>
               </div>
               
