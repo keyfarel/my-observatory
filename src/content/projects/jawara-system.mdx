@@ -1,6 +1,6 @@
 ---
 title: "Jawara Management System"
-description: "A comprehensive community management app integrating Flutter, Laravel, and a Biometric facial recognition system."
+description: "A community management app integrating Flutter, Laravel, and a facial recognition system."
 status: "COMPLETED"
 domain: "Mobile & AI"
 date: 2025-12-01
@@ -10,7 +10,7 @@ tech: "Flutter · Laravel · Python · ngrok"
 
 ## Overview
 
-The Jawara Management System is a comprehensive mobile application designed to digitize and streamline community administration. Developed for the JAWARA program by Group 6, this system provides administrators with powerful tools to manage everything from resident demographics to financial transparency and activity broadcasting.
+Jawara Management System is a mobile app built to digitize community administration. Developed for the JAWARA program by Group 6, the system gives administrators tools to manage resident demographics, finances, and announcements.
 
 <div className="my-14 flex justify-center">
   <div className="relative mx-auto bg-black border-8 border-zinc-800 shadow-2xl overflow-hidden" style={{ width: '280px', height: '580px', borderRadius: '3rem' }}>
@@ -23,31 +23,26 @@ The Jawara Management System is a comprehensive mobile application designed to d
 
 ## My Role & Leadership
 
-As the Team Lead for this project, my responsibilities extended far beyond writing code. I was responsible for:
-- **Project Management:** Breaking down complex features into manageable tasks and coordinating the development workflow across the team.
-- **Technical Architecture:** Designing the system's foundation and ensuring the team adhered to strict architectural standards.
-- **Systems Integration:** Acting as the bridge between the different technology stacks, ensuring the Flutter frontend, Laravel backend, and Python machine learning services communicated seamlessly.
+I was the Team Lead for this project. My main responsibilities included:
+- **Project Management:** Breaking down features into tasks and managing the team workflow.
+- **Technical Architecture:** Designing the system foundation and setting architectural standards.
+- **Systems Integration:** Connecting the Flutter frontend, Laravel backend, and Python machine learning services.
 
 ## Core Features
 
-We built the system to handle the high data complexity of a real-world community:
-- **Financial Tracking:** Automated recording of incomes, community dues, and expenses, complete with comprehensive reporting.
-- **Demographic Management:** A multi-layered data structure tracking physical houses, family units, and individual citizen records.
-- **Biometric Security:** An advanced e-KYC feature allowing users to verify their identity by matching a live selfie against their ID card (KTP).
-- **Community Broadcasting:** A centralized hub for administrators to blast announcements and collect aspirations from residents.
+The system handles real-world community data with the following features:
+- **Financial Tracking:** Records incomes, dues, and expenses with reporting features.
+- **Demographic Management:** Tracks physical houses, family units, and individual citizen records.
+- **Biometric Security:** An e-KYC feature that verifies user identity by matching a live selfie against their ID card (KTP).
+- **Community Broadcasting:** A hub for administrators to send announcements and collect resident feedback.
 
 ## The Architecture & "The Bridge"
 
-The most technically challenging—and interesting—aspect of this project was our architecture. We needed to integrate a deep learning model for biometric verification without the budget for a dedicated GPU cloud server. 
+We needed to integrate a deep learning model for biometric verification but lacked a dedicated GPU server. Our stack used Flutter for the frontend, Laravel for the backend API, and Python (DeepFace) running locally in a Jupyter Notebook for the AI engine.
 
-Our stack consisted of:
-- **Frontend:** Flutter (Mobile UI)
-- **Backend:** Laravel (Business Logic & Database)
-- **AI Engine:** Python (DeepFace) running locally in a Jupyter Notebook
+To connect the Laravel backend to our local Python environment, we set up a tunnel using **FastAPI** and **ngrok**.
 
-To connect the Laravel backend to our local Python machine learning environment, we built a creative tunneling solution using **FastAPI** and **ngrok**. 
-
-Here is the core script we used to establish the persistent bridge directly from the Jupyter Notebook:
+Here is the script used to establish the persistent bridge directly from the Jupyter Notebook:
 
 ```python
 import nest_asyncio
@@ -76,7 +71,7 @@ server = uvicorn.Server(config)
 await server.serve()
 ```
 
-Once the tunnel was open, we exposed the following FastAPI endpoints to handle the heavy lifting of biometric verification and login using the **DeepFace** library:
+After opening the tunnel, we exposed FastAPI endpoints to handle biometric verification and login using the **DeepFace** library:
 
 ```python
 from fastapi import FastAPI, File, UploadFile
@@ -119,7 +114,7 @@ async def find_face(selfie: UploadFile = File(...)):
 
 ## Database Design
 
-To support these features, the Laravel backend implements a robust relational database, logically divided into three domains. The entire API ecosystem is fully documented interactively.
+The Laravel backend uses a relational database divided into three domains. The API endpoints are documented with Swagger.
 
 <div className="my-10 rounded-xl overflow-hidden shadow-xl ring-1 ring-white/10 bg-white/5">
   <img src="/images/projects/jawara-pintar/swagger-api.webp" alt="Jawara Swagger API" className="w-full object-cover m-0" />
@@ -128,21 +123,21 @@ To support these features, the Laravel backend implements a robust relational da
 ### 1. Identity & Access
 | Table | Description |
 | :--- | :--- |
-| **Users** | Core authentication, access roles, and registration states |
-| **Citizens** | Detailed demographic records and biometric verification data |
+| **Users** | Authentication, roles, and registration states |
+| **Citizens** | Demographic records and biometric data |
 
 ### 2. Resident Management
 | Table | Description |
 | :--- | :--- |
-| **Houses** | Physical addresses mapped to specific family units |
-| **Families** | Household groupings and property ownership status |
+| **Houses** | Physical addresses mapped to family units |
+| **Families** | Household groupings and property ownership |
 | **Mutations** | Historical tracking of resident relocations |
 
 ### 3. Finance & Operations
 | Table | Description |
 | :--- | :--- |
-| **Billings** | Generated community dues and payment tracking |
-| **Transactions** | Financial ledger for all incomes and expenses |
+| **Billings** | Community dues and payment tracking |
+| **Transactions** | Ledger for incomes and expenses |
 | **Activities** | Management of community events and personnel |
 
 
@@ -151,4 +146,4 @@ To support these features, the Laravel backend implements a robust relational da
 *   **Mobile App Repository:** [jawara_clone_kel-6](https://github.com/keyfarel/jawara_clone_kel-6)
 *   **Backend API Repository:** [jawara_api](https://github.com/keyfarel/jawara_api)
 *   **Machine Learning Model:** [Python Notebook](https://drive.google.com/file/d/1HUPPdQMXwf-0AEjmuQoz-pNeiyvXBDlU/view?usp=sharing)
-*   **API Documentation:** Built with Swagger (hosted dynamically via ngrok).
+*   **API Documentation:** Built with Swagger and hosted dynamically via ngrok.
