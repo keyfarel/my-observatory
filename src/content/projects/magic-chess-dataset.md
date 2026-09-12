@@ -22,6 +22,19 @@ Instead of invasive data mining, I built a custom **AI-powered Vision pipeline**
 
 Here is a snippet of **"The Deep Scanner V3.5"**, the core engine I built to process screenshots, merge missing context, and output structured JSON:
 
+<div class="my-8 rounded-xl overflow-hidden bg-black/40 border border-white/10 shadow-2xl ring-1 ring-white/5">
+  <div class="flex items-center px-4 py-3 border-b border-white/10 bg-white/5">
+    <div class="flex space-x-2">
+      <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+      <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+      <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+    </div>
+    <div class="ml-4 flex-1 text-center font-mono text-[10px] text-muted-star tracking-widest uppercase mr-12">
+      deep_scanner.py
+    </div>
+  </div>
+  <div class="px-4 py-2 text-sm [&>pre]:!bg-transparent [&>pre]:!m-0">
+
 ```python
 # --- THE DEEP SCANNER V3.5 (Core Extraction Engine) ---
 def scan_and_merge(image, hero_map, existing_data=None):
@@ -73,6 +86,9 @@ def scan_and_merge(image, hero_map, existing_data=None):
         return None
 ```
 
+  </div>
+</div>
+
 This script intelligently handles fragmented screenshots by merging incomplete sentences and filling missing stats into an existing database.
 
 While the snippet above focuses on **Hero Extraction**, the full pipeline is built to process the entire game ecosystem. The final dataset is divided into three core pillars:
@@ -83,6 +99,19 @@ While the snippet above focuses on **Hero Extraction**, the full pipeline is bui
 ### Sample Data Output (Hero Example)
 
 The pipeline transforms raw pixels into clean, relational JSON structures ready for analysis:
+
+<div class="my-8 rounded-xl overflow-hidden bg-black/40 border border-white/10 shadow-2xl ring-1 ring-white/5">
+  <div class="flex items-center px-4 py-3 border-b border-white/10 bg-white/5">
+    <div class="flex space-x-2">
+      <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+      <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+      <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+    </div>
+    <div class="ml-4 flex-1 text-center font-mono text-[10px] text-muted-star tracking-widest uppercase mr-12">
+      miya_stats.json
+    </div>
+  </div>
+  <div class="px-4 py-2 text-sm [&>pre]:!bg-transparent [&>pre]:!m-0">
 
 ```json
 {
@@ -114,6 +143,9 @@ The pipeline transforms raw pixels into clean, relational JSON structures ready 
   "synergies": ["Heartbond", "Marksman"]
 }
 ```
+
+  </div>
+</div>
 
 ## The Result
 

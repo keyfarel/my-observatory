@@ -108,3 +108,13 @@ body {
   to { opacity: 1; transform: scale(1); filter: blur(0); }
 }
 
+
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.animate-float {
+  animation: float-gentle 6s ease-in-out infinite;
+}

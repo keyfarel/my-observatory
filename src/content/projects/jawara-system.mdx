@@ -13,7 +13,7 @@ tech: "Flutter · Laravel · Python · ngrok"
 Jawara Management System is a mobile app built to digitize community administration. Developed for the JAWARA program by Group 6, the system gives administrators tools to manage resident demographics, finances, and announcements.
 
 <div className="my-14 flex justify-center">
-  <div className="relative mx-auto bg-black border-8 border-zinc-800 shadow-2xl overflow-hidden" style={{ width: '280px', height: '580px', borderRadius: '3rem' }}>
+  <div className="relative mx-auto bg-black border-8 border-zinc-800 shadow-2xl overflow-hidden animate-float" style={{ width: '280px', height: '580px', borderRadius: '3rem' }}>
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-zinc-800 rounded-b-2xl z-10"></div>
     <div className="w-full h-full bg-black flex flex-col justify-center">
       <img src="/images/projects/jawara-pintar/dashboard.webp" alt="Jawara Mobile Dashboard" className="w-full h-auto object-cover m-0" />
@@ -44,6 +44,19 @@ To connect the Laravel backend to our local Python environment, we set up a tunn
 
 Here is the script used to establish the persistent bridge directly from the Jupyter Notebook:
 
+<div className="my-8 rounded-xl overflow-hidden bg-black/40 border border-white/10 shadow-2xl ring-1 ring-white/5">
+  <div className="flex items-center px-4 py-3 border-b border-white/10 bg-white/5">
+    <div className="flex space-x-2">
+      <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+      <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+      <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+    </div>
+    <div className="ml-4 flex-1 text-center font-mono text-[10px] text-muted-star tracking-widest uppercase mr-12">
+      tunnel_setup.py
+    </div>
+  </div>
+  <div className="px-4 py-2 text-sm [&>pre]:!bg-transparent [&>pre]:!m-0">
+
 ```python
 import nest_asyncio
 import uvicorn
@@ -71,7 +84,23 @@ server = uvicorn.Server(config)
 await server.serve()
 ```
 
+  </div>
+</div>
+
 After opening the tunnel, we exposed FastAPI endpoints to handle biometric verification and login using the **DeepFace** library:
+
+<div className="my-8 rounded-xl overflow-hidden bg-black/40 border border-white/10 shadow-2xl ring-1 ring-white/5">
+  <div className="flex items-center px-4 py-3 border-b border-white/10 bg-white/5">
+    <div className="flex space-x-2">
+      <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+      <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+      <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+    </div>
+    <div className="ml-4 flex-1 text-center font-mono text-[10px] text-muted-star tracking-widest uppercase mr-12">
+      api_endpoints.py
+    </div>
+  </div>
+  <div className="px-4 py-2 text-sm [&>pre]:!bg-transparent [&>pre]:!m-0">
 
 ```python
 from fastapi import FastAPI, File, UploadFile
@@ -112,12 +141,15 @@ async def find_face(selfie: UploadFile = File(...)):
         return {"status": "error", "message": str(e)}
 ```
 
+  </div>
+</div>
+
 ## Database Design
 
 The Laravel backend uses a relational database divided into three domains. The API endpoints are documented with Swagger.
 
-<div className="my-10 rounded-xl overflow-hidden shadow-xl ring-1 ring-white/10 bg-white/5">
-  <img src="/images/projects/jawara-pintar/swagger-api.webp" alt="Jawara Swagger API" className="w-full object-cover m-0" />
+<div className="my-10 rounded-xl overflow-hidden shadow-xl ring-1 ring-white/10 bg-zinc-900/50 transition-all duration-700 hover:shadow-[0_0_40px_rgba(244,184,96,0.15)] hover:ring-solar-gold/30 hover:-translate-y-2 cursor-pointer">
+  <img src="/images/projects/jawara-pintar/swagger-api.webp" alt="Jawara Swagger API" className="w-full object-cover m-0 transition-transform duration-700 hover:scale-[1.02]" />
 </div>
 
 ### 1. Identity & Access

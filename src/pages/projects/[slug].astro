@@ -82,13 +82,13 @@ const seo = {
         </header>
 
         {entry.data.heroImage && (
-          <div class="w-full aspect-[16/9] border border-muted-star/20 bg-nebula-surface/30 mb-16 md:mb-24 overflow-hidden relative animate-image-reveal" style="animation-delay: 350ms">
+          <div class="w-full aspect-[16/9] rounded-xl border border-white/10 bg-black/30 mb-16 md:mb-24 overflow-hidden relative animate-image-reveal shadow-2xl transition-all duration-700 hover:shadow-[0_0_40px_rgba(244,184,96,0.15)] hover:border-solar-gold/30 group cursor-pointer" style="animation-delay: 350ms">
             <Image 
               src={entry.data.heroImage} 
               alt={entry.data.title}
               width={1200}
               height={675}
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
           </div>
         )}
