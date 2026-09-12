@@ -5,22 +5,32 @@ status: "COMPLETED"
 domain: "Data Engineering"
 date: 2026-08-27
 order: 5
-heroImage: "/images/projects/magic-chess-dataset/hero-data.webp"
 demo: "https://www.kaggle.com/datasets/keyfirdausialfarel/magic-chess-go-go-mcgg-advanced-server-stats/data"
 tech: "Python | NLP | OCR | Pandas | Data Engineering"
 ---
+## Overview
+
+A fully automated OCR and data engineering pipeline designed to extract, structure, and publish game data for Magic Chess: Go Go. Built to overcome the lack of official APIs, providing the community with a structured dataset for meta-analysis.
+
+<div className="my-12 flex justify-center">
+  <div className="w-full relative overflow-hidden rounded-md border border-white/10 bg-deep-space/40 shadow-2xl group">
+    <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-white/10 bg-[#1e1e1e] absolute top-0 w-full z-20">
+      <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+      <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+      <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+      <span className="ml-2 font-mono text-[10px] text-muted-star tracking-widest">dataset_preview</span>
+    </div>
+    <img src="/images/projects/magic-chess-dataset/hero-data.webp" alt="MCGG Dataset Preview" className="w-full h-auto object-cover m-0 pt-10 opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
+  </div>
+</div>
 
 ## The Challenge
 
-In the competitive meta of *Magic Chess: Go Go (MCGG)*, analyzing hero stats and synergy effectiveness is critical for theorycrafting. However, Moonton does not provide a public API for developers to access internal game data. To build predictive models or meta-dashboards, the community needed a reliable, structured dataset.
-
-The challenge was clear: **How do you extract thousands of data points from a game ethically, without reverse-engineering or breaking Terms of Service?**
+Moonton does not provide a public API for *Magic Chess: Go Go (MCGG)*. Analyzing the meta, hero stats, and synergy effectiveness requires structured data. The engineering challenge: Extracting thousands of data points ethically, without reverse-engineering game binaries or violating Terms of Service.
 
 ## The Engineering Approach
 
-Instead of invasive data mining, I built a custom **AI-powered Vision pipeline** to extract the data directly from the visual layer of the game using Google's Gemini Flash.
-
-Here is a snippet of **"The Deep Scanner V3.5"**, the core engine I built to process screenshots, merge missing context, and output structured JSON:
+I developed a custom AI-powered vision pipeline utilizing Gemini 2.5 Flash to extract data directly from the game's visual layer. The core extraction engine handles screenshot ingestion, context merging, and JSON structuring:
 
 <div class="my-8 rounded-xl overflow-hidden bg-black/40 border border-white/10 shadow-2xl ring-1 ring-white/5">
   <div class="flex items-center px-4 py-3 border-b border-white/10 bg-white/5">
@@ -89,16 +99,16 @@ def scan_and_merge(image, hero_map, existing_data=None):
   </div>
 </div>
 
-This script intelligently handles fragmented screenshots by merging incomplete sentences and filling missing stats into an existing database.
+The pipeline resolves fragmented screenshots by merging incomplete OCR strings and populating missing statistics into the database.
 
-While the snippet above focuses on **Hero Extraction**, the full pipeline is built to process the entire game ecosystem. The final dataset is divided into three core pillars:
-1. **Heroes:** Full roster stats including HP, Attack, and dynamic Skill Multipliers.
-2. **Synergies:** Complete trait activation details (Factions & Roles).
-3. **Go Go Cards:** Detailed effects for both Battle and Power cards.
+The complete extraction pipeline targets three core domains:
+1. **Heroes**: Base stats (HP, Attack) and dynamic Skill Multipliers.
+2. **Synergies**: Trait activation thresholds and effects.
+3. **Cards**: Battle and Power card modifiers.
 
 ### Sample Data Output (Hero Example)
 
-The pipeline transforms raw pixels into clean, relational JSON structures ready for analysis:
+Raw pixel data is parsed and structured into relational JSON:
 
 <div class="my-8 rounded-xl overflow-hidden bg-black/40 border border-white/10 shadow-2xl ring-1 ring-white/5">
   <div class="flex items-center px-4 py-3 border-b border-white/10 bg-white/5">
@@ -149,8 +159,6 @@ The pipeline transforms raw pixels into clean, relational JSON structures ready 
 
 ## The Result
 
-The final product is a comprehensive dataset published on Kaggle, covering patches 1.2.54 - 1.2.56. It provides the community with a robust foundation for building machine learning models, meta tier lists, and balancing analysis.
-
-By keeping the extraction process strictly visual, I ensured the project remained 100% compliant with "Fair Use" and community ethics, acting purely as an open-source fan contribution.
+The dataset (Patches 1.2.54 - 1.2.56) is published on Kaggle, providing structured data for machine learning models and meta-analysis. The visual-only extraction method guarantees 100% compliance with Fair Use guidelines, acting purely as an open-source contribution.
 
 *You can view the raw data and community analysis on the [Official Kaggle Page](https://www.kaggle.com/datasets/keyfirdausialfarel/magic-chess-go-go-mcgg-advanced-server-stats/data).*
