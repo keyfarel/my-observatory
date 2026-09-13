@@ -34,15 +34,14 @@ const notesData = await getCollection('notes');
 const recentNotes = notesData.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()).slice(0, 3);
 
 const seo = {
-  title: 'Key Firdausi Al Farel | Software Engineer',
+  title: 'Key Firdausi Al Farel | IoT & Software Engineer',
   description: 'Key Firdausi Al Farel is a software engineer interested in IoT, data, and systems that connect software with the physical world.',
-  ogImage: '/images/og-image.png',
   jsonLd: {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Key Firdausi Al Farel",
-    "jobTitle": "Software Engineer",
-    "url": "https://keyfirdausi.dev",
+    "jobTitle": "IoT & Software Engineer",
+    "url": "https://keyfarel.my.id",
     "sameAs": [
       "https://github.com/keyfarel",
       "https://www.linkedin.com/in/key-firdausi-alfarel-566616290/"

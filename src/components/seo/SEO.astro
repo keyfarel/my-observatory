@@ -10,13 +10,13 @@ interface Props {
 const { 
   title, 
   description, 
-  canonical = new URL(Astro.url.pathname, Astro.site || 'https://keyfirdausi.dev').toString(),
-  ogImage = '/images/og-image.png',
+  canonical = new URL(Astro.url.pathname, Astro.site || 'https://keyfarel.my.id').toString(),
+  ogImage = '/images/global/profile-photo.webp',
   jsonLd
 } = Astro.props;
 
 // Ensure absolute URL for OG image
-const ogImageUrl = new URL(ogImage, Astro.site || 'https://keyfirdausi.dev').toString();
+const ogImageUrl = new URL(ogImage, Astro.site || 'https://keyfarel.my.id').toString();
 ---
 
 <title>{title}</title>

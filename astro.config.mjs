@@ -8,7 +8,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://keyfirdausi.dev',
+  site: 'https://keyfarel.my.id',
   integrations: [react(), mdx(), sitemap()],
 
   vite: {
