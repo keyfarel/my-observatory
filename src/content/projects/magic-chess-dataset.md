@@ -3,7 +3,7 @@ title: "MCGG Advanced Server Dataset"
 description: "A fully automated OCR pipeline to extract, structure, and publish game data for Magic Chess: Go Go when no public API was available."
 status: "COMPLETED"
 domain: "Data Engineering"
-date: 2026-08-27
+date: 2026-02-12
 order: 5
 demo: "https://www.kaggle.com/datasets/keyfirdausialfarel/magic-chess-go-go-mcgg-advanced-server-stats/data"
 tech: "Python | NLP | OCR | Pandas | Data Engineering"

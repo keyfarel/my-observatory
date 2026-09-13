@@ -9,7 +9,9 @@ import { getCollection } from 'astro:content';
 
 const projectsData = await getCollection('projects');
 // Map the collection to the expected format for Map.tsx
-const projects = projectsData.map(p => ({
+const projects = projectsData
+  .sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf())
+  .map(p => ({
   id: p.id,
   slug: p.id,
   data: {

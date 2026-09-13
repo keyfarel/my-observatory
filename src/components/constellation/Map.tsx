@@ -8,6 +8,7 @@ interface Project {
   data: {
     title: string;
     domain: string;
+    date?: string | Date;
   };
 }
 

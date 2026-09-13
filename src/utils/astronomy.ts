@@ -4,6 +4,7 @@ export interface StarDef {
   name: string;
   ra: string;
   dec: string;
+  color?: "blue" | "white" | "yellow" | "orange" | "red";
 }
 
 export interface ConstellationDef {
@@ -16,15 +17,15 @@ export const CONSTELLATIONS: Record<number, ConstellationDef> = {
   1: {
     name: "PISCIS AUSTRINUS",
     stars: [
-      { name: "Fomalhaut", ra: "22h 57m 39s", dec: "-29° 37′ 20″" }
+      { name: "Fomalhaut", ra: "22h 57m 39s", dec: "-29° 37′ 20″", color: "white" }
     ],
     lines: []
   },
   2: {
     name: "CANIS MINOR",
     stars: [
-      { name: "Procyon", ra: "07h 39m 18s", dec: "+05° 13′ 30″" },
-      { name: "Gomeisa", ra: "07h 27m 16s", dec: "+08° 17′ 22″" }
+      { name: "Procyon", ra: "07h 39m 18s", dec: "+05° 13′ 30″", color: "yellow" },
+      { name: "Gomeisa", ra: "07h 27m 16s", dec: "+08° 17′ 22″", color: "blue" }
     ],
     lines: [
       ["Procyon", "Gomeisa"]
@@ -33,9 +34,9 @@ export const CONSTELLATIONS: Record<number, ConstellationDef> = {
   3: {
     name: "TRIANGULUM",
     stars: [
-      { name: "Rasalmothallah", ra: "01h 53m 05s", dec: "+29° 34′ 44″" },
-      { name: "Beta Trianguli", ra: "02h 09m 33s", dec: "+34° 59′ 14″" },
-      { name: "Gamma Trianguli", ra: "02h 17m 19s", dec: "+33° 50′ 50″" }
+      { name: "Rasalmothallah", ra: "01h 53m 05s", dec: "+29° 34′ 44″", color: "yellow" },
+      { name: "Beta Trianguli", ra: "02h 09m 33s", dec: "+34° 59′ 14″", color: "white" },
+      { name: "Gamma Trianguli", ra: "02h 17m 19s", dec: "+33° 50′ 50″", color: "white" }
     ],
     lines: [
       ["Rasalmothallah", "Beta Trianguli"],
@@ -46,10 +47,10 @@ export const CONSTELLATIONS: Record<number, ConstellationDef> = {
   4: {
     name: "CRUX",
     stars: [
-      { name: "Acrux", ra: "12h 26m 36s", dec: "-63° 05′ 57″" },
-      { name: "Mimosa", ra: "12h 47m 43s", dec: "-59° 41′ 20″" },
-      { name: "Gacrux", ra: "12h 31m 10s", dec: "-57° 06′ 48″" },
-      { name: "Imai", ra: "12h 15m 09s", dec: "-58° 44′ 56″" }
+      { name: "Acrux", ra: "12h 26m 36s", dec: "-63° 05′ 57″", color: "blue" },
+      { name: "Mimosa", ra: "12h 47m 43s", dec: "-59° 41′ 20″", color: "blue" },
+      { name: "Gacrux", ra: "12h 31m 10s", dec: "-57° 06′ 48″", color: "red" },
+      { name: "Imai", ra: "12h 15m 09s", dec: "-58° 44′ 56″", color: "blue" }
     ],
     lines: [
       ["Acrux", "Gacrux"],
