@@ -70,10 +70,10 @@ export default function ConstellationMap({ projects }: MapProps) {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.5 }}
         >
-          <div className="text-muted-star/30 mb-2 md:mb-4 uppercase hidden md:block">CONSTELLATION</div>
-          <div className="text-starlight/90 md:text-muted-star/50 uppercase">{constellationName}</div>
+          <div className="text-muted-star/70 mb-2 md:mb-4 uppercase hidden md:block">CONSTELLATION</div>
+          <div className="text-starlight/90 md:text-starlight/70 uppercase">{constellationName}</div>
           <div className="w-1 h-1 rounded-full bg-muted-star/50 md:hidden"></div>
-          <div className="text-solar-gold/90 md:text-muted-star/30">{projects.length} PROJECTS</div>
+          <div className="text-solar-gold/90 md:text-solar-gold/70">{projects.length} PROJECTS</div>
         </motion.div>
 
         {/* Constellation Canvas - Shifted to avoid HUD on mobile */}
