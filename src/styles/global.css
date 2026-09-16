@@ -118,3 +118,13 @@ body {
 .animate-float {
   animation: float-gentle 6s ease-in-out infinite;
 }
+
+/* Limit markdown image sizes so they aren't overwhelmingly large */
+.prose img {
+  max-width: 450px !important;
+  max-height: 500px !important;
+  object-fit: contain;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 0.5rem;
+}
