@@ -127,4 +127,5 @@ body {
   margin-left: auto !important;
   margin-right: auto !important;
   border-radius: 0.5rem;
+  filter: brightness(0.86) contrast(1.12) saturate(0.8);
 }

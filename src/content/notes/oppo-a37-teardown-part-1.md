@@ -3,6 +3,7 @@ title: "Oppo A37 Teardown (Part 1): Reviving My Father's Dead Phone"
 description: "Hardware teardown of an unbootable Oppo A37. Investigating power delivery failure after prolonged inactivity."
 date: 2026-09-11
 tags: ["hardware", "teardown", "oppo-a37", "experiment"]
+thumbnail: "/images/notes/oppo-a37-phone-reparation/battery-test-with-usb-doctor.webp"
 ---
 
 ## Background

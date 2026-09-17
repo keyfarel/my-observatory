@@ -265,11 +265,18 @@ const seo = {
       <div class="space-y-6">
         {recentNotes.map((note, i) => (
           <a href={`/notes/${note.id}`} class="reveal group block bg-deep-space/40 border border-muted-star/20 hover:border-muted-star/40 p-8 md:p-10 transition-all duration-300" style={`transition-delay: ${i * 100}ms`}>
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-              <div class="md:col-span-3 font-mono text-xs text-muted-star/70 uppercase tracking-widest pt-1">
-                {new Date(note.data.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
-              </div>
-              <div class="md:col-span-9">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
+              {note.data.thumbnail && (
+                <div class="md:col-span-3">
+                <div class="w-32 md:w-full max-w-[160px] aspect-square overflow-hidden border border-muted-star/20 shrink-0 mx-auto">
+                    <img src={note.data.thumbnail} alt="" class="w-full h-full object-cover brightness-[0.78] contrast-[1.08] saturate-[0.65] opacity-90 group-hover:brightness-100 group-hover:contrast-100 group-hover:saturate-100 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
+                  </div>
+                </div>
+              )}
+              <div class={note.data.thumbnail ? "md:col-span-9" : "md:col-span-12"}>
+                <div class="font-mono text-[10px] md:text-xs text-muted-star/70 uppercase tracking-widest mb-3">
+                  {new Date(note.data.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
+                </div>
                 <h3 class="font-display text-2xl text-starlight group-hover:text-solar-gold transition-colors mb-4 uppercase tracking-tight">
                   {note.data.title}
                 </h3>
