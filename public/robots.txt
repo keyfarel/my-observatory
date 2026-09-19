@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://keyfirdausi.dev/sitemap-index.xml
+Sitemap: https://keyfarel.my.id/sitemap-index.xml
