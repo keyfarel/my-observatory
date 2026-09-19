@@ -1,9 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
     <style>
-        .k { font-family: 'IBM Plex Mono', Consolas, monospace; font-size: 90px; font-weight: bold; fill: #E8EDF2; }
-        .dot { font-family: 'IBM Plex Mono', Consolas, monospace; font-size: 90px; font-weight: bold; fill: #F4B860; }
+        /* Default to Dark Mode (White text) */
+        .k { font-family: 'IBM Plex Mono', Consolas, monospace; font-size: 85px; font-weight: bold; fill: #E8EDF2; }
+        .dot { font-family: 'IBM Plex Mono', Consolas, monospace; font-size: 85px; font-weight: bold; fill: #F4B860; }
+        
+        /* Adapt to Light Mode (Dark Navy text for visibility on white backgrounds) */
+        @media (prefers-color-scheme: light) {
+            .k { fill: #080B12; }
+        }
     </style>
     <!-- Background is transparent -->
-    <text x="20" y="90" class="k">K</text>
-    <text x="70" y="90" class="dot">.</text>
+    <text x="22" y="88" class="k">K</text>
+    <text x="68" y="88" class="dot">.</text>
 </svg>
