@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
     <style>
-        /* Default state (used by Google Search and Light Mode tabs): Dark Navy text */
+        /* INI ADALAH APA YANG DIBACA OLEH GOOGLEBOT */
+        /* Googlebot MENGABAIKAN kode @media (prefers-color-scheme) */
+        
         .k { font-family: 'IBM Plex Mono', Consolas, monospace; font-size: 85px; font-weight: bold; fill: #292524; }
         .dot { font-family: 'IBM Plex Mono', Consolas, monospace; font-size: 85px; font-weight: bold; fill: #F4B860; }
-        
-        /* Adapt to Dark Mode tabs: White text */
-        @media (prefers-color-scheme: dark) {
-            .k { fill: #E8EDF2; }
-        }
     </style>
-    <!-- Transparent Background -->
+    
+    <!-- Lingkaran putih buatan sistem pencarian Google -->
+    <circle cx="60" cy="60" r="50" fill="#FFFFFF" />
+    
     <text x="22" y="88" class="k">K</text>
     <text x="68" y="88" class="dot">.</text>
 </svg>
